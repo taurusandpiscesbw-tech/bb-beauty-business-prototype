@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BB Beauty Business — 预约管理（美容师端·中文版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--tiffany:#0ABFB8;--robin:#81D8D0;--pale:#E0F7F5;--navy:#003B36;--darknavy:#002B26;--rose:#E8A89A;--black:#0a0a0a;--card:#1a1a1a;--grey:#1e1e1e;--gt:#AAAAAA;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope','Noto Sans SC',sans-serif;background:#070a0a;background-image:radial-gradient(1100px 500px at 30% 0%,rgba(10,191,184,.09),transparent 55%),radial-gradient(700px 400px at 90% 100%,rgba(232,168,154,.07),transparent 55%);color:#fff;padding:48px 24px 80px;-webkit-font-smoothing:antialiased;}
+  .board-head{max-width:1500px;margin:0 auto 40px}
+  .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--tiffany);font-weight:700}
+  .board-head h1{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:800;font-size:32px;margin-top:8px}
+  .board-head p{color:#9fb0ae;margin-top:8px;font-size:14px;max-width:760px;line-height:1.7}
+  .board{max-width:1500px;margin:0 auto;display:flex;gap:34px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .col{width:340px}
+  .col-label{margin:0 4px 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .col-label .num{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--tiffany)}
+  .col-label .ttl{font-size:14px;font-weight:700}
+  .col-label .sub{font-size:11.5px;color:#8a9b99;font-weight:500}
+  .phone{width:340px;border-radius:42px;padding:11px;background:linear-gradient(160deg,#2a2c2c,#0c0d0d);box-shadow:0 40px 80px -24px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04) inset}
+  .screen{border-radius:32px;overflow:hidden;display:flex;flex-direction:column;min-height:700px;background:var(--black);color:#fff}
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 22px 6px;font-size:13px;font-weight:700;color:#fff}
+  .statusbar .dots{display:flex;gap:5px;align-items:center}
+  .langbar{display:flex;gap:7px;padding:6px 18px 10px}
+  .lang{flex:1;text-align:center;font-size:12px;font-weight:700;padding:7px 0;border-radius:999px}
+  .lang.active{background:var(--tiffany);color:var(--darknavy)}
+  .lang.idle{background:var(--grey);color:var(--gt)}
+  .appbar{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 14px}
+  .appbar .t{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:700;font-size:22px}
+  .appbar .t span{color:var(--tiffany)}
+  .appbar .today-chip{background:var(--tiffany);color:var(--darknavy);font-size:11px;font-weight:800;padding:6px 12px;border-radius:999px}
+  .iconbtn{width:36px;height:36px;border-radius:50%;background:#181818;border:1px solid #282828;display:grid;place-items:center;flex:none}
+  .datestrip{display:flex;gap:8px;padding:0 20px;overflow:hidden;margin-bottom:14px}
+  .dchip{flex:none;width:46px;text-align:center;background:var(--card);border-radius:13px;padding:8px 0;border:1px solid #282828}
+  .dchip.today{background:var(--tiffany);border-color:var(--tiffany)}
+  .dchip .dow{font-size:9.5px;font-weight:700;color:var(--gt)}
+  .dchip.today .dow{color:var(--darknavy)}
+  .dchip .dnum{font-family:'Playfair Display',serif;font-weight:800;font-size:18px;color:#fff;margin-top:1px}
+  .dchip.today .dnum{color:var(--darknavy)}
+  .dchip .dot{width:5px;height:5px;border-radius:50%;background:var(--tiffany);margin:3px auto 0}
+  .dchip.today .dot{background:var(--darknavy)}
+  .daysummary{display:flex;gap:1px;margin:0 20px 16px;background:#1c1c1c;border-radius:14px;overflow:hidden}
+  .dsstat{flex:1;background:var(--card);padding:11px 8px;text-align:center}
+  .dsstat:first-child{border-radius:14px 0 0 14px}
+  .dsstat:last-child{border-radius:0 14px 14px 0}
+  .dsstat .dv{font-family:'Playfair Display',serif;font-weight:800;font-size:17px;line-height:1}
+  .dsstat .dv.teal{color:var(--tiffany)}
+  .dsstat .dl{font-size:9.5px;font-weight:700;color:var(--gt);margin-top:3px}
+  .schedule{padding:0 20px;flex:1}
+  .trow{display:flex;gap:12px;margin-bottom:6px}
+  .ttime{width:46px;font-size:11px;font-weight:700;color:#4a6a67;padding-top:12px;flex:none;text-align:right}
+  .tbody{flex:1}
+  .bk-block{background:var(--card);border-left:3px solid var(--tiffany);border-radius:0 13px 13px 0;padding:11px 12px;position:relative}
+  .bk-block.no-dep{border-color:#2a3a38}
+  .bk-block.open{background:transparent;border:1.5px dashed #1e2e2c;border-left:none;border-radius:13px;padding:10px 12px;display:flex;align-items:center;gap:8px}
+  .bk-block.open .ol{font-size:12px;font-weight:700;color:#3a5a57}
+  .bk-block.open .ot{font-size:11px;color:#2e4a47;font-weight:600}
+  .bk-block.buffer{background:#0d1a18;border:none;border-left:3px solid #1a3a35;border-radius:0 10px 10px 0;padding:7px 12px}
+  .bk-block .bkname{font-weight:800;font-size:13px;margin-bottom:2px}
+  .bk-block .bksvc{font-size:12px;color:#8aaba8;font-weight:600;margin-bottom:5px}
+  .bk-block .bkmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .bk-block .bkprice{font-family:'Playfair Display',serif;font-weight:800;font-size:14px}
+  .dep-pill{font-size:9.5px;font-weight:800;background:rgba(10,191,184,.14);color:var(--tiffany);padding:3px 8px;border-radius:999px}
+  .bk-block .more{position:absolute;top:10px;right:10px;color:#3a5a57;font-size:17px;cursor:pointer}
+  .buf-label{font-size:10px;font-weight:700;color:#2e4a47}
+  .bottomnav{display:flex;justify-content:space-around;align-items:center;padding:12px 0 20px;margin-top:auto;background:#0d0d0d;border-top:1px solid #1c1c1c}
+  .navitem{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 8px;cursor:pointer;color:#596e6c}
+  .navitem.active{color:var(--tiffany)}
+  .navlabel{font-size:9.5px;font-weight:700}
+  .backrow{display:flex;align-items:center;gap:14px;padding:8px 20px 14px}
+  .backrow .ptitle{font-weight:800;font-size:15px;flex:1}
+  .detbody{padding:0 20px;flex:1}
+  .client-card{background:var(--card);border:1px solid #242424;border-radius:18px;padding:16px;margin-bottom:13px;display:flex;align-items:center;gap:14px}
+  .client-av{width:52px;height:52px;border-radius:16px;background:linear-gradient(140deg,#caa,#8c5d52);flex:none;display:grid;place-items:center;font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:#fff}
+  .client-info .cn{font-weight:800;font-size:15px}
+  .client-info .ct{font-size:11.5px;color:#8aaba8;font-weight:600;margin-top:3px}
+  .client-info .cv{font-size:11px;color:var(--tiffany);font-weight:700;margin-top:3px}
+  .detcard{background:var(--card);border:1px solid #242424;border-radius:18px;padding:16px;margin-bottom:13px}
+  .detrow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #1e1e1e;font-size:13px}
+  .detrow:last-child{border-bottom:none}
+  .detrow .k{color:#8aaba8;font-weight:600}
+  .detrow .v{font-weight:800}
+  .detrow .v.teal{color:var(--tiffany)}
+  .act-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}
+  .act-btn{background:var(--card);border:1px solid #282828;border-radius:14px;padding:14px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .act-btn .ai{font-size:20px}
+  .act-btn .al{font-size:12px;font-weight:700;color:#cfd6d5}
+  .act-btn.primary{background:var(--tiffany);border-color:var(--tiffany)}
+  .act-btn.primary .al{color:var(--darknavy)}
+  .act-btn.danger .al{color:#c97d6c}
+  .policy{font-size:11px;color:#3a5a57;text-align:center;font-weight:600;line-height:1.6;padding:4px 0}
+  .alertbg{flex:1;display:flex;flex-direction:column;align-items:center;padding:0 20px 20px}
+  .alert-glow{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#003B36,#0ABFB8);display:grid;place-items:center;margin:24px auto 20px;box-shadow:0 0 0 18px rgba(10,191,184,.08),0 0 0 36px rgba(10,191,184,.04);font-size:38px}
+  .alert-title{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:800;font-size:24px;text-align:center;line-height:1.25;margin-bottom:6px}
+  .alert-sub{font-size:12.5px;color:#8aaba8;text-align:center;font-weight:500;margin-bottom:20px;line-height:1.55}
+  .alert-card{background:var(--card);border:1px solid #242424;border-radius:18px;padding:16px;width:100%;margin-bottom:14px}
+  .alert-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1e1e1e;font-size:13px}
+  .alert-row:last-child{border-bottom:none}
+  .alert-row .k{color:#8aaba8;font-weight:600}
+  .alert-row .v{font-weight:800}
+  .alert-row .v.teal{color:var(--tiffany)}
+  .alert-btn{width:100%;border:none;font-family:inherit;font-weight:800;font-size:14px;padding:15px;border-radius:15px;cursor:pointer;background:var(--tiffany);color:var(--darknavy);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px}
+  .alert-btn.ghost{background:transparent;border:1.5px solid #2a3a38;color:var(--tiffany);font-size:13.5px;padding:13px}
+  .autoconf{display:flex;align-items:center;gap:7px;background:rgba(10,191,184,.1);border:1px solid rgba(10,191,184,.2);border-radius:12px;padding:10px 14px;font-size:12px;font-weight:700;color:#81D8D0;margin-bottom:18px;width:100%}
+  .autoconf .dot{width:7px;height:7px;border-radius:50%;background:var(--tiffany);animation:blink 1.8s infinite;flex:none}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  .calbody{padding:0 20px;flex:1}
+  .month-cal{background:var(--card);border:1px solid #222;border-radius:18px;padding:16px;margin-bottom:14px}
+  .cal-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .cal-hd .m{font-weight:800;font-size:14px}
+  .cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+  .cw{font-size:9px;font-weight:700;color:#4a6a67;padding-bottom:2px}
+  .cd{font-size:12px;font-weight:700;color:#8aaba8;padding:6px 0;border-radius:8px;position:relative;cursor:pointer}
+  .cd.today{background:var(--tiffany);color:var(--darknavy);font-weight:900}
+  .cd.busy{color:#cfd6d5}
+  .cd.muted{color:#2e3a38}
+  .cd .bdot{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);display:flex;gap:2px}
+  .cd .bdot span{width:4px;height:4px;border-radius:50%;background:var(--tiffany);display:block}
+  .cd.today .bdot span{background:var(--darknavy)}
+  .week-strip{background:var(--card);border:1px solid #222;border-radius:18px;overflow:hidden;margin-bottom:14px}
+  .wrow{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid #1a1a1a;gap:12px}
+  .wrow:last-child{border-bottom:none}
+  .wrow.today-row{background:#0d1a18}
+  .wday{font-size:12px;font-weight:700;width:34px;color:var(--gt)}
+  .wday.today-day{color:var(--tiffany)}
+  .wdate{font-family:'Playfair Display',serif;font-weight:800;font-size:17px;width:28px}
+  .wbars{flex:1;display:flex;gap:5px;align-items:center}
+  .wbar{height:8px;border-radius:4px;background:rgba(10,191,184,.25)}
+  .wbar.full{background:var(--tiffany)}
+  .wcount{font-size:11px;font-weight:700;color:#4a6a67}
+  .wcount.has{color:var(--tiffany)}
+  .wrev{font-size:11.5px;font-weight:800;color:#cfd6d5;text-align:right;min-width:52px}
+  .scrollnote{font-size:10px;color:#3a5a57;text-align:center;padding:2px 0 8px;font-style:italic}
+</style>
+</head>
+<body>
+<div class="board-head">
+  <div class="kicker">BB Beauty Business · 预约管理（美容师端）</div>
+  <h1>预约管理 — 美容师的每日指挥中心（中文版）</h1>
+  <p>美容师的每日预约视图。今日档期以时段方式显示每笔预约及订金状态与快捷操作。预约明细展示顾客历史记录与一键操作。新预约通知是顾客完成预约时的即时反馈。日历总览展示全月忙碌天数与每周收入一览。</p>
+</div>
+<div class="board">
+
+<!-- 今日档期 -->
+<div class="col">
+  <div class="col-label"><span class="num">今日档期</span><span class="ttl">今日预约</span><span class="sub">时段视图</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="appbar"><span class="t">预约<span>。</span></span><div class="today-chip">6月10日（周二）</div></div>
+    <div class="datestrip">
+      <div class="dchip"><div class="dow">周一</div><div class="dnum">9</div><div class="dot"></div></div>
+      <div class="dchip today"><div class="dow">周二</div><div class="dnum">10</div><div class="dot"></div></div>
+      <div class="dchip"><div class="dow">周三</div><div class="dnum">11</div></div>
+      <div class="dchip"><div class="dow">周四</div><div class="dnum">12</div><div class="dot"></div></div>
+      <div class="dchip"><div class="dow">周五</div><div class="dnum">13</div><div class="dot"></div></div>
+      <div class="dchip"><div class="dow">周六</div><div class="dnum">14</div><div class="dot"></div></div>
+    </div>
+    <div class="daysummary">
+      <div class="dsstat"><div class="dv">3</div><div class="dl">预约数</div></div>
+      <div class="dsstat"><div class="dv teal">RM 1,000</div><div class="dl">今日收入</div></div>
+      <div class="dsstat"><div class="dv">4.5 小时</div><div class="dl">已占用</div></div>
+    </div>
+    <div class="schedule">
+      <div class="trow"><div class="ttime">9:00</div><div class="tbody"><div class="bk-block" style="min-height:78px"><div class="bkname">Sarah Tan</div><div class="bksvc">雾眉（半永久）· 120 分钟</div><div class="bkmeta"><span class="bkprice">RM 680</span><span class="dep-pill">✓ RM 50 订金</span></div><div class="more">⋯</div></div></div></div>
+      <div class="trow"><div class="ttime">11:00</div><div class="tbody"><div class="bk-block buffer"><span class="buf-label">30 分钟清理缓冲</span></div></div></div>
+      <div class="trow"><div class="ttime">11:30</div><div class="tbody"><div class="bk-block no-dep" style="min-height:60px"><div class="bkname">Priya Ramasamy</div><div class="bksvc">经典美睫套餐 · 90 分钟</div><div class="bkmeta"><span class="bkprice">RM 180</span><span style="font-size:10px;color:#4a6a67;font-weight:600">无订金</span></div><div class="more">⋯</div></div></div></div>
+      <div class="trow"><div class="ttime">1:00</div><div class="tbody"><div class="bk-block open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3a5a57" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div><div class="ol">空档 · 90 分钟</div><div class="ot">暂无预约</div></div></div></div></div>
+      <div class="trow"><div class="ttime">2:30</div><div class="tbody"><div class="bk-block no-dep" style="min-height:50px"><div class="bkname">Jennifer Ng</div><div class="bksvc">睫毛上翘＋染色 · 60 分钟</div><div class="bkmeta"><span class="bkprice">RM 140</span><span style="font-size:10px;color:#4a6a67;font-weight:600">无订金</span></div><div class="more">⋯</div></div></div></div>
+      <div class="scrollnote" style="margin-top:10px">点击预约进行管理 · 左滑取消</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 预约明细 -->
+<div class="col">
+  <div class="col-label"><span class="num">预约详情</span><span class="ttl">预约明细</span><span class="sub">操作与顾客记录</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="backrow"><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><span class="ptitle">预约明细</span></div>
+    <div class="detbody">
+      <div class="client-card"><div class="client-av">S</div><div class="client-info"><div class="cn">Sarah Tan</div><div class="ct">+60 12-•••• 4821 · 第 3 次光临</div><div class="cv">★ 忠实顾客 · 与你预约 3 次</div></div></div>
+      <div class="detcard">
+        <div class="detrow"><span class="k">服务</span><span class="v">雾眉（半永久）</span></div>
+        <div class="detrow"><span class="k">日期与时间</span><span class="v">6月10日（周二）· 上午 9:00</span></div>
+        <div class="detrow"><span class="k">时长</span><span class="v">120 分钟 ＋ 30 缓冲</span></div>
+        <div class="detrow"><span class="k">服务价格</span><span class="v">RM 680</span></div>
+        <div class="detrow"><span class="k">已付订金</span><span class="v teal">✓ RM 50 已确保</span></div>
+        <div class="detrow"><span class="k">你的实收</span><span class="v teal">RM 632.40</span></div>
+      </div>
+      <div class="act-grid">
+        <div class="act-btn primary"><div class="ai">✅</div><div class="al">标记完成</div></div>
+        <div class="act-btn"><div class="ai">💬</div><div class="al">联系顾客</div></div>
+        <div class="act-btn"><div class="ai">🔄</div><div class="al">改期</div></div>
+        <div class="act-btn danger"><div class="ai">⚠️</div><div class="al">未到场</div></div>
+      </div>
+      <div class="policy">未到场将没收 RM 50 订金 · 预约前 24 小时内可免费取消</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 新预约通知 -->
+<div class="col">
+  <div class="col-label"><span class="num">通知</span><span class="ttl">新预约提醒</span><span class="sub">即时通知</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="alertbg">
+      <div class="alert-glow">🎉</div>
+      <div class="alert-title">有新预约<br>进来了！</div>
+      <div class="alert-sub">Sarah Tan 已完成预约并支付订金，你的档期已锁定。</div>
+      <div class="autoconf"><span class="dot"></span>已自动确认 · 无需你额外操作</div>
+      <div class="alert-card">
+        <div class="alert-row"><span class="k">顾客</span><span class="v">Sarah Tan</span></div>
+        <div class="alert-row"><span class="k">服务</span><span class="v">雾眉（半永久）</span></div>
+        <div class="alert-row"><span class="k">时间</span><span class="v">6月10日（周二）· 上午 9:00</span></div>
+        <div class="alert-row"><span class="k">时长</span><span class="v">120 分钟</span></div>
+        <div class="alert-row"><span class="k">已付订金</span><span class="v teal">✓ RM 50 已确保</span></div>
+        <div class="alert-row"><span class="k">预计实收</span><span class="v teal">周一 RM 632.40</span></div>
+      </div>
+      <button class="alert-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>在档期中查看</button>
+      <button class="alert-btn ghost">💬 联系 Sarah</button>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 日历总览 -->
+<div class="col">
+  <div class="col-label"><span class="num">日历</span><span class="ttl">月度总览</span><span class="sub">忙碌日与周收入</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="appbar"><span class="t">日历<span>。</span></span><div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div></div>
+    <div class="calbody">
+      <div class="month-cal">
+        <div class="cal-hd"><span class="m">2026年6月</span><span style="display:flex;gap:14px;color:#4a6a67"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span></div>
+        <div class="cgrid">
+          <div class="cw">日</div><div class="cw">一</div><div class="cw">二</div><div class="cw">三</div><div class="cw">四</div><div class="cw">五</div><div class="cw">六</div>
+          <div class="cd muted">31</div><div class="cd">1</div><div class="cd">2</div><div class="cd">3</div><div class="cd">4</div><div class="cd busy">5<div class="bdot"><span></span></div></div><div class="cd">6</div>
+          <div class="cd">7</div><div class="cd busy">8<div class="bdot"><span></span><span></span></div></div><div class="cd busy">9<div class="bdot"><span></span><span></span></div></div><div class="cd today">10<div class="bdot"><span></span><span></span><span></span></div></div><div class="cd busy">11<div class="bdot"><span></span></div></div><div class="cd busy">12<div class="bdot"><span></span><span></span></div></div><div class="cd">13</div>
+          <div class="cd">14</div><div class="cd busy">15<div class="bdot"><span></span><span></span><span></span></div></div><div class="cd busy">16<div class="bdot"><span></span></div></div><div class="cd busy">17<div class="bdot"><span></span><span></span></div></div><div class="cd busy">18<div class="bdot"><span></span><span></span></div></div><div class="cd busy">19<div class="bdot"><span></span></div></div><div class="cd">20</div>
+          <div class="cd">21</div><div class="cd busy">22<div class="bdot"><span></span><span></span></div></div><div class="cd busy">23<div class="bdot"><span></span><span></span><span></span></div></div><div class="cd busy">24<div class="bdot"><span></span></div></div><div class="cd busy">25<div class="bdot"><span></span><span></span></div></div><div class="cd busy">26<div class="bdot"><span></span><span></span></div></div><div class="cd">27</div>
+          <div class="cd">28</div><div class="cd busy">29<div class="bdot"><span></span></div></div><div class="cd busy">30<div class="bdot"><span></span><span></span></div></div><div class="cd muted">1</div><div class="cd muted">2</div><div class="cd muted">3</div><div class="cd muted">4</div>
+        </div>
+      </div>
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gt);margin-bottom:10px">本周 · 6月9–14日</div>
+      <div class="week-strip">
+        <div class="wrow"><div class="wday">周一</div><div class="wdate">9</div><div class="wbars"><div class="wbar" style="width:40%"></div></div><div class="wcount has">2</div><div class="wrev">RM 360</div></div>
+        <div class="wrow today-row"><div class="wday today-day">周二</div><div class="wdate" style="color:var(--tiffany)">10</div><div class="wbars"><div class="wbar full" style="width:75%"></div></div><div class="wcount has">3</div><div class="wrev" style="color:var(--tiffany)">RM 1,000</div></div>
+        <div class="wrow"><div class="wday">周三</div><div class="wdate">11</div><div class="wbars"><div class="wbar" style="width:25%"></div></div><div class="wcount has">1</div><div class="wrev">RM 140</div></div>
+        <div class="wrow"><div class="wday">周四</div><div class="wdate">12</div><div class="wbars"><div class="wbar" style="width:50%"></div></div><div class="wcount has">2</div><div class="wrev">RM 820</div></div>
+        <div class="wrow"><div class="wday">周五</div><div class="wdate">13</div><div class="wbars"><div class="wbar" style="width:65%"></div></div><div class="wcount has">3</div><div class="wrev">RM 900</div></div>
+        <div class="wrow"><div class="wday">周六</div><div class="wdate">14</div><div class="wbars"></div><div class="wcount">—</div><div class="wrev" style="color:#2e3a38">休息</div></div>
+      </div>
+      <div class="scrollnote">点击任意日期查看或添加预约</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+</body>
+</html>

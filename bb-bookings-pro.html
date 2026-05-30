@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BB Beauty Business — Booking Management (Pro)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--tiffany:#0ABFB8;--robin:#81D8D0;--pale:#E0F7F5;--navy:#003B36;--darknavy:#002B26;--rose:#E8A89A;--black:#0a0a0a;--card:#1a1a1a;--grey:#1e1e1e;--gt:#AAAAAA;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope',sans-serif;background:#070a0a;background-image:radial-gradient(1100px 500px at 30% 0%,rgba(10,191,184,.09),transparent 55%),radial-gradient(700px 400px at 90% 100%,rgba(232,168,154,.07),transparent 55%);color:#fff;padding:48px 24px 80px;-webkit-font-smoothing:antialiased;}
+  .board-head{max-width:1500px;margin:0 auto 40px}
+  .kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--tiffany);font-weight:700}
+  .board-head h1{font-family:'Playfair Display',serif;font-weight:800;font-size:34px;margin-top:8px;letter-spacing:-.01em}
+  .board-head p{color:#9fb0ae;margin-top:8px;font-size:14px;max-width:760px;line-height:1.6}
+  .board{max-width:1500px;margin:0 auto;display:flex;gap:34px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .col{width:340px}
+  .col-label{margin:0 4px 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .col-label .num{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--tiffany)}
+  .col-label .ttl{font-size:14px;font-weight:700}
+  .col-label .sub{font-size:11.5px;color:#8a9b99;font-weight:500}
+  .phone{width:340px;border-radius:42px;padding:11px;background:linear-gradient(160deg,#2a2c2c,#0c0d0d);box-shadow:0 40px 80px -24px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04) inset}
+  .screen{border-radius:32px;overflow:hidden;display:flex;flex-direction:column;min-height:700px;background:var(--black);color:#fff}
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 22px 6px;font-size:13px;font-weight:700;color:#fff}
+  .statusbar .dots{display:flex;gap:5px;align-items:center}
+  .langbar{display:flex;gap:7px;padding:6px 18px 10px}
+  .lang{flex:1;text-align:center;font-size:12px;font-weight:700;padding:7px 0;border-radius:999px}
+  .lang.active{background:var(--tiffany);color:var(--darknavy)}
+  .lang.idle{background:var(--grey);color:var(--gt)}
+  .appbar{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 14px}
+  .appbar .t{font-family:'Playfair Display',serif;font-weight:700;font-size:22px}
+  .appbar .t span{color:var(--tiffany)}
+  .appbar .today-chip{background:var(--tiffany);color:var(--darknavy);font-size:11px;font-weight:800;padding:6px 12px;border-radius:999px}
+  .iconbtn{width:36px;height:36px;border-radius:50%;background:#181818;border:1px solid #282828;display:grid;place-items:center;flex:none}
+  .datestrip{display:flex;gap:8px;padding:0 20px;overflow:hidden;margin-bottom:14px}
+  .dchip{flex:none;width:46px;text-align:center;background:var(--card);border-radius:13px;padding:8px 0;border:1px solid #282828}
+  .dchip.today{background:var(--tiffany);border-color:var(--tiffany)}
+  .dchip .dow{font-size:9.5px;font-weight:700;color:var(--gt)}
+  .dchip.today .dow{color:var(--darknavy)}
+  .dchip .dnum{font-family:'Playfair Display',serif;font-weight:800;font-size:18px;color:#fff;margin-top:1px}
+  .dchip.today .dnum{color:var(--darknavy)}
+  .dchip .dot{width:5px;height:5px;border-radius:50%;background:var(--tiffany);margin:3px auto 0}
+  .dchip.today .dot{background:var(--darknavy)}
+  .daysummary{display:flex;gap:1px;margin:0 20px 16px;background:#1c1c1c;border-radius:14px;overflow:hidden}
+  .dsstat{flex:1;background:var(--card);padding:11px 8px;text-align:center}
+  .dsstat:first-child{border-radius:14px 0 0 14px}
+  .dsstat:last-child{border-radius:0 14px 14px 0}
+  .dsstat .dv{font-family:'Playfair Display',serif;font-weight:800;font-size:17px;line-height:1}
+  .dsstat .dv.teal{color:var(--tiffany)}
+  .dsstat .dl{font-size:9.5px;font-weight:700;color:var(--gt);margin-top:3px}
+  .schedule{padding:0 20px;flex:1}
+  .trow{display:flex;gap:12px;margin-bottom:6px}
+  .ttime{width:46px;font-size:11px;font-weight:700;color:#4a6a67;padding-top:12px;flex:none;text-align:right}
+  .tbody{flex:1}
+  .bk-block{background:var(--card);border-left:3px solid var(--tiffany);border-radius:0 13px 13px 0;padding:11px 12px;position:relative}
+  .bk-block.no-dep{border-color:#2a3a38}
+  .bk-block.open{background:transparent;border:1.5px dashed #1e2e2c;border-left:none;border-radius:13px;padding:10px 12px;display:flex;align-items:center;gap:8px}
+  .bk-block.open .ol{font-size:12px;font-weight:700;color:#3a5a57}
+  .bk-block.open .ot{font-size:11px;color:#2e4a47;font-weight:600}
+  .bk-block.buffer{background:#0d1a18;border:none;border-left:3px solid #1a3a35;border-radius:0 10px 10px 0;padding:7px 12px}
+  .bk-block .bkname{font-weight:800;font-size:13px;margin-bottom:2px}
+  .bk-block .bksvc{font-size:12px;color:#8aaba8;font-weight:600;margin-bottom:5px}
+  .bk-block .bkmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .bk-block .bkprice{font-family:'Playfair Display',serif;font-weight:800;font-size:14px}
+  .dep-pill{font-size:9.5px;font-weight:800;background:rgba(10,191,184,.14);color:var(--tiffany);padding:3px 8px;border-radius:999px}
+  .bk-block .more{position:absolute;top:10px;right:10px;color:#3a5a57;font-size:17px;cursor:pointer}
+  .buf-label{font-size:10px;font-weight:700;color:#2e4a47}
+  .bottomnav{display:flex;justify-content:space-around;align-items:center;padding:12px 0 20px;margin-top:auto;background:#0d0d0d;border-top:1px solid #1c1c1c}
+  .navitem{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 8px;cursor:pointer;color:#596e6c}
+  .navitem.active{color:var(--tiffany)}
+  .navlabel{font-size:9.5px;font-weight:700}
+  .backrow{display:flex;align-items:center;gap:14px;padding:8px 20px 14px}
+  .backrow .ptitle{font-weight:800;font-size:15px;flex:1}
+  .detbody{padding:0 20px;flex:1}
+  .client-card{background:var(--card);border:1px solid #242424;border-radius:18px;padding:16px;margin-bottom:13px;display:flex;align-items:center;gap:14px}
+  .client-av{width:52px;height:52px;border-radius:16px;background:linear-gradient(140deg,#caa,#8c5d52);flex:none;display:grid;place-items:center;font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:#fff}
+  .client-info .cn{font-weight:800;font-size:15px}
+  .client-info .ct{font-size:11.5px;color:#8aaba8;font-weight:600;margin-top:3px}
+  .client-info .cv{font-size:11px;color:var(--tiffany);font-weight:700;margin-top:3px}
+  .detcard{background:var(--card);border:1px solid #242424;border-radius:18px;padding:16px;margin-bottom:13px}
+  .detrow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #1e1e1e;font-size:13px}
+  .detrow:last-child{border-bottom:none}
+  .detrow .k{color:#8aaba8;font-weight:600}
+  .detrow .v{font-weight:800}
+  .detrow .v.teal{color:var(--tiffany)}
+  .act-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}
+  .act-btn{background:var(--card);border:1px solid #282828;border-radius:14px;padding:14px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .act-btn .ai{font-size:20px}
+  .act-btn .al{font-size:12px;font-weight:700;color:#cfd6d5}
+  .act-btn.primary{background:var(--tiffany);border-color:var(--tiffany)}
+  .act-btn.primary .al{color:var(--darknavy)}
+  .act-btn.danger .al{color:#c97d6c}
+  .policy{font-size:11px;color:#3a5a57;text-align:center;font-weight:600;line-height:1.6;padding:4px 0}
+  .alertbg{flex:1;display:flex;flex-direction:column;align-items:center;padding:0 20px 20px}
+  .alert-glow{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#003B36,#0ABFB8);display:grid;place-items:center;margin:24px auto 20px;box-shadow:0 0 0 18px rgba(10,191,184,.08),0 0 0 36px rgba(10,191,184,.04);font-size:38px}
+  .alert-title{font-family:'Playfair Display',serif;font-weight:800;font-size:26px;text-align:center;line-height:1.15;margin-bottom:6px}
+  .alert-sub{font-size:12.5px;color:#8aaba8;text-align:center;font-weight:500;margin-bottom:20px;line-height:1.5}
+  .alert-card{background:var(--card);border:1px solid #242424;border-radius:18px;padding:16px;width:100%;margin-bottom:14px}
+  .alert-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1e1e1e;font-size:13px}
+  .alert-row:last-child{border-bottom:none}
+  .alert-row .k{color:#8aaba8;font-weight:600}
+  .alert-row .v{font-weight:800}
+  .alert-row .v.teal{color:var(--tiffany)}
+  .alert-btn{width:100%;border:none;font-family:inherit;font-weight:800;font-size:14.5px;padding:15px;border-radius:15px;cursor:pointer;background:var(--tiffany);color:var(--darknavy);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px}
+  .alert-btn.ghost{background:transparent;border:1.5px solid #2a3a38;color:var(--tiffany);font-size:13.5px;padding:13px}
+  .autoconf{display:flex;align-items:center;gap:7px;background:rgba(10,191,184,.1);border:1px solid rgba(10,191,184,.2);border-radius:12px;padding:10px 14px;font-size:12px;font-weight:700;color:#81D8D0;margin-bottom:18px;width:100%}
+  .autoconf .dot{width:7px;height:7px;border-radius:50%;background:var(--tiffany);animation:blink 1.8s infinite;flex:none}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  .calbody{padding:0 20px;flex:1}
+  .month-cal{background:var(--card);border:1px solid #222;border-radius:18px;padding:16px;margin-bottom:14px}
+  .cal-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .cal-hd .m{font-weight:800;font-size:14px}
+  .cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+  .cw{font-size:9px;font-weight:700;color:#4a6a67;padding-bottom:2px}
+  .cd{font-size:12px;font-weight:700;color:#8aaba8;padding:6px 0;border-radius:8px;position:relative;cursor:pointer}
+  .cd.today{background:var(--tiffany);color:var(--darknavy);font-weight:900}
+  .cd.busy{color:#cfd6d5}
+  .cd.muted{color:#2e3a38}
+  .cd .bdot{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);display:flex;gap:2px}
+  .cd .bdot span{width:4px;height:4px;border-radius:50%;background:var(--tiffany);display:block}
+  .cd.today .bdot span{background:var(--darknavy)}
+  .week-strip{background:var(--card);border:1px solid #222;border-radius:18px;overflow:hidden;margin-bottom:14px}
+  .wrow{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid #1a1a1a;gap:12px}
+  .wrow:last-child{border-bottom:none}
+  .wrow.today-row{background:#0d1a18}
+  .wday{font-size:12px;font-weight:700;width:34px;color:var(--gt)}
+  .wday.today-day{color:var(--tiffany)}
+  .wdate{font-family:'Playfair Display',serif;font-weight:800;font-size:17px;width:28px}
+  .wbars{flex:1;display:flex;gap:5px;align-items:center}
+  .wbar{height:8px;border-radius:4px;background:rgba(10,191,184,.25)}
+  .wbar.full{background:var(--tiffany)}
+  .wcount{font-size:11px;font-weight:700;color:#4a6a67}
+  .wcount.has{color:var(--tiffany)}
+  .wrev{font-size:11.5px;font-weight:800;color:#cfd6d5;text-align:right;min-width:52px}
+  .scrollnote{font-size:10px;color:#3a5a57;text-align:center;padding:2px 0 8px;font-style:italic}
+</style>
+</head>
+<body>
+<div class="board-head">
+  <div class="kicker">BB Beauty Business · Booking Management (Pro)</div>
+  <h1>Booking Management — The Merchant's Daily Command Centre.</h1>
+  <p>The merchant's working view of their bookings. Today's Schedule shows time-blocked appointments with deposit status and quick actions. Booking Detail surfaces client history and one-tap actions. New Booking Alert is the instant gratification moment when a client books. Calendar Overview shows the full month with busy-day indicators and weekly revenue.</p>
+</div>
+<div class="board">
+
+<!-- Schedule -->
+<div class="col">
+  <div class="col-label"><span class="num">Schedule</span><span class="ttl">Today's bookings</span><span class="sub">time-block view</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang active">EN</div><div class="lang idle">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="appbar"><span class="t">Bookings<span>.</span></span><div class="today-chip">Tue 10 Jun</div></div>
+    <div class="datestrip">
+      <div class="dchip"><div class="dow">MON</div><div class="dnum">9</div><div class="dot"></div></div>
+      <div class="dchip today"><div class="dow">TUE</div><div class="dnum">10</div><div class="dot"></div></div>
+      <div class="dchip"><div class="dow">WED</div><div class="dnum">11</div></div>
+      <div class="dchip"><div class="dow">THU</div><div class="dnum">12</div><div class="dot"></div></div>
+      <div class="dchip"><div class="dow">FRI</div><div class="dnum">13</div><div class="dot"></div></div>
+      <div class="dchip"><div class="dow">SAT</div><div class="dnum">14</div><div class="dot"></div></div>
+    </div>
+    <div class="daysummary">
+      <div class="dsstat"><div class="dv">3</div><div class="dl">Bookings</div></div>
+      <div class="dsstat"><div class="dv teal">RM 1,000</div><div class="dl">Today</div></div>
+      <div class="dsstat"><div class="dv">4.5 hr</div><div class="dl">Booked</div></div>
+    </div>
+    <div class="schedule">
+      <div class="trow"><div class="ttime">9:00</div><div class="tbody"><div class="bk-block" style="min-height:78px"><div class="bkname">Sarah Tan</div><div class="bksvc">Brow Embroidery (PMU) · 120 min</div><div class="bkmeta"><span class="bkprice">RM 680</span><span class="dep-pill">✓ RM 50 deposit</span></div><div class="more">⋯</div></div></div></div>
+      <div class="trow"><div class="ttime">11:00</div><div class="tbody"><div class="bk-block buffer"><span class="buf-label">30 min clean-up buffer</span></div></div></div>
+      <div class="trow"><div class="ttime">11:30</div><div class="tbody"><div class="bk-block no-dep" style="min-height:60px"><div class="bkname">Priya Ramasamy</div><div class="bksvc">Classic Lash Set · 90 min</div><div class="bkmeta"><span class="bkprice">RM 180</span><span style="font-size:10px;color:#4a6a67;font-weight:600">no deposit</span></div><div class="more">⋯</div></div></div></div>
+      <div class="trow"><div class="ttime">1:00</div><div class="tbody"><div class="bk-block open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3a5a57" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><div><div class="ol">Open slot · 90 min</div><div class="ot">No booking yet</div></div></div></div></div>
+      <div class="trow"><div class="ttime">2:30</div><div class="tbody"><div class="bk-block no-dep" style="min-height:50px"><div class="bkname">Jennifer Ng</div><div class="bksvc">Lash Lift &amp; Tint · 60 min</div><div class="bkmeta"><span class="bkprice">RM 140</span><span style="font-size:10px;color:#4a6a67;font-weight:600">no deposit</span></div><div class="more">⋯</div></div></div></div>
+      <div class="scrollnote" style="margin-top:10px">Tap any booking to manage · Swipe left to cancel</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">Home</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">Bookings</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">Broadcast</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">Wallet</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">Profile</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- Booking Detail -->
+<div class="col">
+  <div class="col-label"><span class="num">Detail</span><span class="ttl">Booking detail</span><span class="sub">actions + client history</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang active">EN</div><div class="lang idle">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="backrow"><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><span class="ptitle">Booking detail</span></div>
+    <div class="detbody">
+      <div class="client-card"><div class="client-av">S</div><div class="client-info"><div class="cn">Sarah Tan</div><div class="ct">+60 12-•••• 4821 · 3rd visit</div><div class="cv">★ Loyal client · 3 bookings with you</div></div></div>
+      <div class="detcard">
+        <div class="detrow"><span class="k">Service</span><span class="v">Brow Embroidery (PMU)</span></div>
+        <div class="detrow"><span class="k">Date &amp; time</span><span class="v">Tue 10 Jun · 9:00 AM</span></div>
+        <div class="detrow"><span class="k">Duration</span><span class="v">120 min + 30 buffer</span></div>
+        <div class="detrow"><span class="k">Service price</span><span class="v">RM 680</span></div>
+        <div class="detrow"><span class="k">Deposit paid</span><span class="v teal">✓ RM 50 secured</span></div>
+        <div class="detrow"><span class="k">You receive</span><span class="v teal">RM 632.40</span></div>
+      </div>
+      <div class="act-grid">
+        <div class="act-btn primary"><div class="ai">✅</div><div class="al">Mark complete</div></div>
+        <div class="act-btn"><div class="ai">💬</div><div class="al">Message client</div></div>
+        <div class="act-btn"><div class="ai">🔄</div><div class="al">Reschedule</div></div>
+        <div class="act-btn danger"><div class="ai">⚠️</div><div class="al">No-show</div></div>
+      </div>
+      <div class="policy">No-show forfeits the RM 50 deposit · Free cancellation 24h before appointment</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">Home</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">Bookings</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">Broadcast</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">Wallet</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">Profile</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- New Booking Alert -->
+<div class="col">
+  <div class="col-label"><span class="num">Alert</span><span class="ttl">New booking received</span><span class="sub">instant notification</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang active">EN</div><div class="lang idle">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="alertbg">
+      <div class="alert-glow">🎉</div>
+      <div class="alert-title">New booking<br>just came in!</div>
+      <div class="alert-sub">Sarah Tan has booked and paid the deposit. Your slot is secured.</div>
+      <div class="autoconf"><span class="dot"></span>Auto-confirmed · No action needed from you</div>
+      <div class="alert-card">
+        <div class="alert-row"><span class="k">Client</span><span class="v">Sarah Tan</span></div>
+        <div class="alert-row"><span class="k">Service</span><span class="v">Brow Embroidery (PMU)</span></div>
+        <div class="alert-row"><span class="k">When</span><span class="v">Tue 10 Jun · 9:00 AM</span></div>
+        <div class="alert-row"><span class="k">Duration</span><span class="v">120 min</span></div>
+        <div class="alert-row"><span class="k">Deposit paid</span><span class="v teal">✓ RM 50 secured</span></div>
+        <div class="alert-row"><span class="k">You'll receive</span><span class="v teal">RM 632.40 on Mon</span></div>
+      </div>
+      <button class="alert-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>View in schedule</button>
+      <button class="alert-btn ghost">💬 Message Sarah</button>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">Home</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">Bookings</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">Broadcast</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">Wallet</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">Profile</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- Calendar Overview -->
+<div class="col">
+  <div class="col-label"><span class="num">Calendar</span><span class="ttl">Month overview</span><span class="sub">busy days + weekly revenue</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang active">EN</div><div class="lang idle">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="appbar"><span class="t">Calendar<span>.</span></span><div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div></div>
+    <div class="calbody">
+      <div class="month-cal">
+        <div class="cal-hd"><span class="m">June 2026</span><span style="display:flex;gap:14px;color:#4a6a67"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span></div>
+        <div class="cgrid">
+          <div class="cw">S</div><div class="cw">M</div><div class="cw">T</div><div class="cw">W</div><div class="cw">T</div><div class="cw">F</div><div class="cw">S</div>
+          <div class="cd muted">31</div><div class="cd">1</div><div class="cd">2</div><div class="cd">3</div><div class="cd">4</div><div class="cd busy">5<div class="bdot"><span></span></div></div><div class="cd">6</div>
+          <div class="cd">7</div><div class="cd busy">8<div class="bdot"><span></span><span></span></div></div><div class="cd busy">9<div class="bdot"><span></span><span></span></div></div><div class="cd today">10<div class="bdot"><span></span><span></span><span></span></div></div><div class="cd busy">11<div class="bdot"><span></span></div></div><div class="cd busy">12<div class="bdot"><span></span><span></span></div></div><div class="cd">13</div>
+          <div class="cd">14</div><div class="cd busy">15<div class="bdot"><span></span><span></span><span></span></div></div><div class="cd busy">16<div class="bdot"><span></span></div></div><div class="cd busy">17<div class="bdot"><span></span><span></span></div></div><div class="cd busy">18<div class="bdot"><span></span><span></span></div></div><div class="cd busy">19<div class="bdot"><span></span></div></div><div class="cd">20</div>
+          <div class="cd">21</div><div class="cd busy">22<div class="bdot"><span></span><span></span></div></div><div class="cd busy">23<div class="bdot"><span></span><span></span><span></span></div></div><div class="cd busy">24<div class="bdot"><span></span></div></div><div class="cd busy">25<div class="bdot"><span></span><span></span></div></div><div class="cd busy">26<div class="bdot"><span></span><span></span></div></div><div class="cd">27</div>
+          <div class="cd">28</div><div class="cd busy">29<div class="bdot"><span></span></div></div><div class="cd busy">30<div class="bdot"><span></span><span></span></div></div><div class="cd muted">1</div><div class="cd muted">2</div><div class="cd muted">3</div><div class="cd muted">4</div>
+        </div>
+      </div>
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gt);margin-bottom:10px">This week · Jun 9–14</div>
+      <div class="week-strip">
+        <div class="wrow"><div class="wday">MON</div><div class="wdate">9</div><div class="wbars"><div class="wbar" style="width:40%"></div></div><div class="wcount has">2</div><div class="wrev">RM 360</div></div>
+        <div class="wrow today-row"><div class="wday today-day">TUE</div><div class="wdate" style="color:var(--tiffany)">10</div><div class="wbars"><div class="wbar full" style="width:75%"></div></div><div class="wcount has">3</div><div class="wrev" style="color:var(--tiffany)">RM 1,000</div></div>
+        <div class="wrow"><div class="wday">WED</div><div class="wdate">11</div><div class="wbars"><div class="wbar" style="width:25%"></div></div><div class="wcount has">1</div><div class="wrev">RM 140</div></div>
+        <div class="wrow"><div class="wday">THU</div><div class="wdate">12</div><div class="wbars"><div class="wbar" style="width:50%"></div></div><div class="wcount has">2</div><div class="wrev">RM 820</div></div>
+        <div class="wrow"><div class="wday">FRI</div><div class="wdate">13</div><div class="wbars"><div class="wbar" style="width:65%"></div></div><div class="wcount has">3</div><div class="wrev">RM 900</div></div>
+        <div class="wrow"><div class="wday">SAT</div><div class="wdate">14</div><div class="wbars"></div><div class="wcount">—</div><div class="wrev" style="color:#2e3a38">Closed</div></div>
+      </div>
+      <div class="scrollnote">Tap any date to view or add bookings</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">Home</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">Bookings</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">Broadcast</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">Wallet</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">Profile</span></div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+</body>
+</html>
