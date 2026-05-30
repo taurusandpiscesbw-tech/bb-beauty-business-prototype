@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BB Beauty Business — 广播动态（中文版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tiffany:#0ABFB8;--robin:#81D8D0;--pale:#E0F7F5;--navy:#003B36;--darknavy:#002B26;
+    --rose:#E8A89A;--black:#0a0a0a;--card-night:#1a1a1a;--grey-night:#1e1e1e;--grey-text:#AAAAAA;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Manrope','Noto Sans SC',sans-serif;background:#070a0a;
+    background-image:radial-gradient(1200px 600px at 20% -10%,rgba(10,191,184,.10),transparent 60%),
+                     radial-gradient(900px 500px at 100% 100%,rgba(232,168,154,.07),transparent 60%);
+    color:#fff;padding:48px 24px 80px;-webkit-font-smoothing:antialiased;
+  }
+  .board-head{max-width:1500px;margin:0 auto 40px}
+  .board-head .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--tiffany);font-weight:700}
+  .board-head h1{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:800;font-size:32px;margin-top:8px;letter-spacing:-.01em}
+  .board-head p{color:#9fb0ae;margin-top:8px;font-size:14px;max-width:780px;line-height:1.7}
+  .decision{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .d-chip{display:flex;align-items:center;gap:8px;background:#111a19;border:1px solid rgba(10,191,184,.25);border-radius:12px;padding:10px 14px;font-size:12.5px;font-weight:700;color:#cfe8e6}
+  .d-chip .label{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tiffany);margin-bottom:3px}
+  .d-chip div{display:flex;flex-direction:column}
+
+  .board{max-width:1500px;margin:0 auto;display:flex;gap:34px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .col{width:340px}
+  .col-label{margin:0 4px 14px;display:flex;align-items:baseline;gap:10px}
+  .col-label .num{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--tiffany)}
+  .col-label .ttl{font-size:14px;font-weight:700}
+  .col-label .sub{font-size:11.5px;color:#8a9b99;font-weight:500}
+
+  .phone{width:340px;border-radius:42px;padding:11px;background:linear-gradient(160deg,#2a2c2c,#0c0d0d);box-shadow:0 40px 80px -24px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04) inset}
+  .screen{border-radius:32px;overflow:hidden;display:flex;flex-direction:column;min-height:700px}
+  .screen.night{background:var(--black);color:#fff}
+  .screen.day{background:var(--pale);color:var(--navy)}
+
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 22px 6px;font-size:13px;font-weight:700}
+  .night .statusbar{color:#fff}
+  .day .statusbar{color:var(--navy)}
+  .statusbar .dots{display:flex;gap:5px;align-items:center}
+  .langbar{display:flex;gap:7px;padding:6px 18px 10px}
+  .lang{flex:1;text-align:center;font-size:12px;font-weight:700;padding:7px 0;border-radius:999px}
+  .night .lang.active{background:var(--tiffany);color:var(--darknavy)}
+  .night .lang.idle{background:var(--grey-night);color:var(--grey-text)}
+  .day .lang.active{background:var(--navy);color:#fff}
+  .day .lang.idle{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}
+
+  .appbar{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 14px}
+  .appbar .t{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:700;font-size:22px;letter-spacing:-.01em}
+  .appbar .t span{color:var(--tiffany)}
+  .iconbtn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex:none}
+  .night .iconbtn{background:#181818;border:1px solid #282828}
+  .day .iconbtn{background:#fff;border:1px solid rgba(0,59,54,.12)}
+  .iconbtn.teal{background:rgba(10,191,184,.14);border-color:rgba(10,191,184,.3)}
+  .iconbtn.teal svg{color:var(--tiffany)}
+  .appbar .acts{display:flex;gap:9px}
+  .content{flex:1;padding:0 20px;overflow:hidden}
+
+  .bottomnav{display:flex;justify-content:space-around;align-items:center;padding:12px 0 20px;margin-top:auto}
+  .night .bottomnav{background:#0d0d0d;border-top:1px solid #1c1c1c}
+  .day .bottomnav{background:#fff;border-top:1px solid rgba(0,59,54,.08)}
+  .navitem{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 10px;cursor:pointer}
+  .navitem svg{display:block}
+  .navlabel{font-size:9.5px;font-weight:700}
+  .night .navitem{color:#596e6c}
+  .night .navitem.active{color:var(--tiffany)}
+  .day .navitem{color:#7da59f}
+  .day .navitem.active{color:var(--navy)}
+
+  /* hub */
+  .followerbanner{background:linear-gradient(120deg,rgba(10,191,184,.14),rgba(232,168,154,.10));border:1px solid rgba(10,191,184,.25);border-radius:20px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .fb-n{font-family:'Playfair Display',serif;font-weight:800;font-size:36px;color:var(--rose);line-height:1}
+  .fb-t{font-weight:700;font-size:13px;line-height:1.5;color:#cfe8e6}
+  .fb-t small{font-size:11px;color:#8aaba8;font-weight:500;display:block;margin-top:3px;line-height:1.4}
+  .quickpost{display:flex;gap:9px;margin-bottom:20px}
+  .qp{flex:1;background:#141414;border:1px solid #252525;border-radius:14px;padding:11px 8px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .qp .qi{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:16px}
+  .qp.slot .qi{background:rgba(10,191,184,.18)}
+  .qp.spot .qi{background:rgba(232,168,154,.18)}
+  .qp.broad .qi{background:rgba(255,255,255,.07)}
+  .qp .ql{font-size:10.5px;font-weight:700;color:#aab5b3}
+  .sectl{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--grey-text);margin-bottom:12px}
+  .mpost{background:#131313;border:1px solid #222;border-radius:16px;padding:13px;margin-bottom:10px}
+  .mpost .mptop{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .postbadge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;padding:4px 9px;border-radius:999px;letter-spacing:.03em}
+  .postbadge.slot{background:rgba(10,191,184,.18);color:var(--tiffany)}
+  .postbadge.spot{background:rgba(232,168,154,.18);color:var(--rose)}
+  .postbadge.broad{background:rgba(255,255,255,.07);color:#aab5b3}
+  .mpost .ago{font-size:11px;color:#596e6c;font-weight:600;margin-left:auto}
+  .mpost .mpbody{font-size:12.5px;font-weight:600;color:#d0d9d8;line-height:1.5;margin-bottom:10px}
+  .mpstats{display:flex;gap:14px}
+  .mpstats .stat{font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:5px}
+  .mpstats .stat.reach{color:#596e6c}
+  .mpstats .stat.booked{color:var(--tiffany)}
+  .mpstats .stat.hearts{color:var(--rose)}
+
+  /* compose */
+  .back-row{display:flex;align-items:center;gap:14px;padding:4px 20px 14px}
+  .back-row .iconbtn{background:#181818;border:1px solid #282828}
+  .back-row .ptitle{font-weight:800;font-size:15px;flex:1}
+  .back-row .sharedbtn{background:var(--tiffany);color:var(--darknavy);border:none;font-family:inherit;font-weight:800;font-size:12.5px;padding:9px 16px;border-radius:12px;cursor:pointer}
+  .posttypes{display:flex;gap:9px;margin-bottom:20px}
+  .pttile{flex:1;background:#141414;border:1.5px solid #252525;border-radius:14px;padding:12px 6px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px}
+  .pttile.sel{border-color:var(--tiffany);background:rgba(10,191,184,.08)}
+  .pttile .ptico{font-size:20px;line-height:1}
+  .pttile .ptlb{font-size:10.5px;font-weight:800;color:#aab5b3}
+  .pttile.sel .ptlb{color:var(--tiffany)}
+  .field{margin-bottom:13px}
+  .field label{display:block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--grey-text);margin-bottom:7px}
+  .inp{width:100%;background:#141414;border:1px solid #262626;border-radius:13px;padding:13px;font-family:inherit;font-size:13.5px;font-weight:600;color:#fff;display:flex;align-items:center;justify-content:space-between}
+  .inp.auto{color:#5c6664;font-size:13px}
+  .two{display:flex;gap:10px}
+  .two .field{flex:1}
+  .audience{display:flex;align-items:center;gap:12px;background:#141414;border:1px solid #252525;border-radius:15px;padding:13px;margin-bottom:4px}
+  .audience .ai{width:36px;height:36px;border-radius:12px;background:rgba(10,191,184,.14);display:grid;place-items:center;flex:none;color:var(--tiffany)}
+  .audience .at{flex:1}
+  .audience .an{font-weight:800;font-size:13.5px}
+  .audience .as{font-size:11px;color:#8aaba8;font-weight:600;margin-top:2px}
+  .nearbtoggle{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#111;border:1px solid #1e2b2a;border-radius:12px;margin-bottom:18px}
+  .nearbtoggle .t{font-size:12px;font-weight:700;color:#8aaba8;line-height:1.4;max-width:220px}
+  .nearbtoggle .t span{color:#cfe8e6}
+  .toggle{width:38px;height:22px;border-radius:999px;position:relative;flex:none}
+  .toggle.on{background:var(--tiffany)}.toggle.off{background:#333}
+  .toggle i{position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff}
+  .toggle.on i{left:18px}.toggle.off i{left:2px}
+  .broadcast-btn{width:100%;border:none;font-family:inherit;font-weight:800;font-size:14px;padding:16px;border-radius:16px;cursor:pointer;background:var(--tiffany);color:var(--darknavy);display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 16px 32px -16px rgba(10,191,184,.5)}
+
+  /* feed */
+  .day-header-strip{background:var(--robin);padding-bottom:12px}
+  .notif-banner{background:#fff;border-radius:14px;margin:0 0 14px;padding:11px 13px;display:flex;align-items:center;gap:11px;box-shadow:0 10px 28px -14px rgba(0,59,54,.4);border:1px solid rgba(10,191,184,.3)}
+  .notif-banner .nb-mark{width:34px;height:34px;border-radius:10px;background:var(--darknavy);display:grid;place-items:center;flex:none;position:relative}
+  .notif-banner .nb-mark b{font-family:'Playfair Display',serif;font-size:19px;color:var(--robin);line-height:1}
+  .notif-banner .nb-mark .dot{position:absolute;left:7px;bottom:6px;width:4px;height:4px;border-radius:50%;background:var(--robin)}
+  .notif-banner .nb-t{flex:1;min-width:0}
+  .notif-banner .nb-t .nm{font-weight:800;font-size:12.5px;color:var(--navy)}
+  .notif-banner .nb-t .ms{font-size:11px;color:#3d6b65;font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .notif-banner .nb-book{background:var(--navy);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:11.5px;padding:8px 13px;border-radius:10px;white-space:nowrap;cursor:pointer}
+  .feedcard{background:#fff;border-radius:20px;padding:15px;margin-bottom:13px;box-shadow:0 10px 24px -18px rgba(0,59,54,.4)}
+  .fhead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .fav{width:38px;height:38px;border-radius:12px;background:linear-gradient(150deg,#caa,#8c5d52);flex:none}
+  .fav.teal{background:linear-gradient(150deg,#81D8D0,#3aa39b)}
+  .fn{font-weight:800;font-size:13px;color:var(--navy)}
+  .fs{font-size:10.5px;color:#3d6b65;font-weight:600;margin-top:2px}
+  .fago{margin-left:auto;font-size:11px;color:#9fc4be;font-weight:600;white-space:nowrap}
+  .slotbox{background:var(--pale);border:1px solid rgba(10,191,184,.25);border-radius:14px;padding:13px;margin-bottom:13px}
+  .slotbox .sv{font-weight:800;font-size:14px;color:var(--navy)}
+  .slotbox .st{font-size:12px;color:#3d6b65;font-weight:600;margin-top:4px;display:flex;align-items:center;gap:8px}
+  .slotbox .sp{font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:var(--navy);margin-top:8px}
+  .bookbtn{width:100%;background:var(--navy);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:13.5px;padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 12px 24px -14px rgba(0,59,54,.6)}
+  .factions{display:flex;align-items:center;gap:14px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,59,54,.07)}
+  .heartbtn{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#b76a58}
+  .baimg{display:flex;border-radius:14px;overflow:hidden;height:110px;margin-bottom:11px}
+  .baimg .bef{flex:1;background:linear-gradient(135deg,#3a4f4d,#243634);display:grid;place-items:flex-end;padding:8px}
+  .baimg .aft{flex:1;background:linear-gradient(135deg,#0ABFB8,#067e79);display:grid;place-items:flex-end;padding:8px}
+  .baimg span{font-size:8.5px;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.85);text-transform:uppercase}
+  .caption{font-size:12.5px;font-weight:600;color:#3d6b65;line-height:1.55;margin-bottom:10px}
+  .servicetag{display:inline-flex;align-items:center;gap:6px;background:var(--pale);border:1px solid rgba(0,59,54,.14);border-radius:999px;font-size:11px;font-weight:700;color:var(--navy);padding:5px 11px;margin-bottom:10px}
+  .softbookbtn{width:100%;background:transparent;color:var(--navy);border:1.5px solid rgba(0,59,54,.2);font-family:inherit;font-weight:800;font-size:13px;padding:12px;border-radius:13px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer}
+
+  /* expanded */
+  .expheader{background:var(--robin);padding-bottom:0}
+  .backrow{display:flex;align-items:center;gap:12px;padding:4px 18px 16px}
+  .backrow .iconbtn{background:rgba(255,255,255,.55);border:none}
+  .expmerch{padding:16px 20px;display:flex;align-items:center;gap:12px}
+  .expav{width:52px;height:52px;border-radius:16px;background:linear-gradient(150deg,#caa,#8c5d52);border:2px solid #fff;flex:none}
+  .expmn{font-weight:800;font-size:15px;color:var(--navy)}
+  .expms{font-size:11.5px;color:#2c6b63;font-weight:600;margin-top:2px}
+  .expfollow{background:var(--navy);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:12px;padding:9px 16px;border-radius:12px;margin-left:auto;white-space:nowrap}
+  .expbody{padding:0 20px 16px;flex:1}
+  .expbadge{display:inline-flex;align-items:center;gap:7px;background:rgba(10,191,184,.14);border:1px solid rgba(10,191,184,.3);border-radius:999px;font-size:11px;font-weight:800;color:var(--tiffany);padding:6px 12px;letter-spacing:.03em;margin-bottom:12px}
+  .exptitle{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:800;font-size:24px;color:var(--navy);line-height:1.2;margin-bottom:6px}
+  .expsub{font-size:13px;color:#3d6b65;font-weight:600;margin-bottom:18px;line-height:1.6}
+  .expslotbox{background:#fff;border-radius:18px;padding:16px;box-shadow:0 10px 24px -18px rgba(0,59,54,.5);margin-bottom:16px}
+  .exprow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(0,59,54,.07);font-size:13px}
+  .exprow:last-child{border-bottom:none}
+  .exprow .k{color:#3d6b65;font-weight:600}
+  .exprow .v{font-weight:800;color:var(--navy)}
+  .exprow .v.price{font-family:'Playfair Display',serif;font-size:20px}
+  .expactions{display:flex;gap:10px;margin-bottom:14px}
+  .expbookbtn{flex:1;background:var(--navy);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:15px;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;box-shadow:0 16px 32px -16px rgba(0,59,54,.6)}
+  .hbtn{background:#fff;border:1px solid rgba(0,59,54,.12);border-radius:14px;width:50px;height:50px;display:grid;place-items:center;box-shadow:0 6px 16px -10px rgba(0,59,54,.3);cursor:pointer;flex:none}
+  .expnote{font-size:11px;color:#3d6b65;text-align:center;font-weight:600;line-height:1.6}
+  .scrollnote{font-size:10px;color:#5f6b69;text-align:center;padding:4px 0 8px;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <div class="kicker">BB Beauty Business · 广播动态</div>
+  <h1>WhatsApp 替代核心功能（中文版）</h1>
+  <p>商家向关注者发帖，取代 WhatsApp 群发。顾客在「关注」动态中看到一个整洁、可直接预约的信息流。三种帖子类型涵盖美容师需要发送的所有信息——每张卡片都以转化行动作为结尾。</p>
+  <div class="decision">
+    <div class="d-chip"><div><div class="label">互动方式</div>❤️ 爱心反应 ＋ 预约按钮——无评论功能</div></div>
+    <div class="d-chip"><div><div class="label">帖子类型</div>⚡ 空档预约 · ✨ 作品聚焦 · 📣 广播消息</div></div>
+    <div class="d-chip"><div><div class="label">为何不设评论</div>评论会拖延预约。爱心提供社交认可，无需商家额外管理。</div></div>
+  </div>
+</div>
+
+<div class="board">
+
+  <!-- ===== 广播中心 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">广播中心</span><span class="ttl">美容师 · 广播标签</span><span class="sub">夜间</span></div>
+    <div class="phone"><div class="screen night">
+      <div class="statusbar"><span>9:41</span><span class="dots">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+      </span></div>
+      <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+      <div class="appbar">
+        <span class="t">广播<span>。</span></span>
+        <div class="iconbtn teal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div>
+      </div>
+      <div class="content">
+        <div class="followerbanner">
+          <div><div class="fb-n">247</div></div>
+          <div class="fb-t">位关注者<small>你的广播触达 247 位顾客——比任何 WhatsApp 群都多。</small></div>
+        </div>
+        <div class="quickpost">
+          <div class="qp slot"><div class="qi">⚡</div><div class="ql">空档预约</div></div>
+          <div class="qp spot"><div class="qi">✨</div><div class="ql">作品聚焦</div></div>
+          <div class="qp broad"><div class="qi">📣</div><div class="ql">广播消息</div></div>
+        </div>
+        <div class="sectl">最近帖子</div>
+        <div class="mpost">
+          <div class="mptop"><span class="postbadge slot">⚡ 空档预约</span><span class="ago">2 天前</span></div>
+          <div class="mpbody">经典美睫套餐 — 6月10日（周二）下午 2:30 有空档</div>
+          <div class="mpstats">
+            <span class="stat reach"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>142 人触达</span>
+            <span class="stat booked"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>3 人预约</span>
+          </div>
+        </div>
+        <div class="mpost">
+          <div class="mptop"><span class="postbadge spot">✨ 作品聚焦</span><span class="ago">5 天前</span></div>
+          <div class="mpbody">雾眉修复后 72 小时——自然立体，效果惊艳 🌿</div>
+          <div class="mpstats">
+            <span class="stat reach"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>198 人触达</span>
+            <span class="stat hearts"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.8z"/></svg>47 个爱心</span>
+          </div>
+        </div>
+        <div class="mpost">
+          <div class="mptop"><span class="postbadge broad">📣 广播消息</span><span class="ago">1 周前</span></div>
+          <div class="mpbody">哈芝节假期 6月14–16日暂停营业，17日恢复 🌙</div>
+          <div class="mpstats">
+            <span class="stat reach"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>247 人触达</span>
+            <span class="stat hearts"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.8z"/></svg>89 个爱心</span>
+          </div>
+        </div>
+      </div>
+      <div class="bottomnav">
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+        <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== 发布帖子 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">发布</span><span class="ttl">新帖子 · 空档预约</span><span class="sub">夜间</span></div>
+    <div class="phone"><div class="screen night">
+      <div class="statusbar"><span>9:41</span><span class="dots">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+      </span></div>
+      <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+      <div class="back-row">
+        <div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+        <span class="ptitle">新帖子</span>
+        <button class="sharedbtn">预览</button>
+      </div>
+      <div class="content">
+        <div class="posttypes">
+          <div class="pttile sel"><div class="ptico">⚡</div><div class="ptlb">空档预约</div></div>
+          <div class="pttile"><div class="ptico">✨</div><div class="ptlb">作品聚焦</div></div>
+          <div class="pttile"><div class="ptico">📣</div><div class="ptlb">广播消息</div></div>
+        </div>
+        <div class="field">
+          <label>服务</label>
+          <div class="inp">经典美睫套餐<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a9795" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="two">
+          <div class="field"><label>日期</label><div class="inp" style="font-size:12.5px">明天 · 6月10日</div></div>
+          <div class="field"><label>时间</label><div class="inp">下午 2:30</div></div>
+        </div>
+        <div class="field">
+          <label>价格</label>
+          <div class="inp auto">RM 180 — 来自服务菜单</div>
+        </div>
+        <div class="field">
+          <label>添加备注（可选）</label>
+          <div class="inp">有取消空档 🙌</div>
+        </div>
+        <div class="audience">
+          <div class="ai"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg></div>
+          <div class="at"><div class="an">247 位关注者</div><div class="as">所有关注者即时收到通知</div></div>
+        </div>
+        <div class="nearbtoggle">
+          <div class="t">同时通知<span>附近尚未关注的顾客</span></div>
+          <div class="toggle off"><i></i></div>
+        </div>
+        <button class="broadcast-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg>
+          向 247 位关注者广播
+        </button>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== 顾客关注动态 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">动态</span><span class="ttl">顾客 · 关注标签</span><span class="sub">日间</span></div>
+    <div class="phone"><div class="screen day">
+      <div class="day-header-strip">
+        <div class="statusbar" style="color:var(--navy)"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar" style="padding:6px 18px 10px"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div class="appbar" style="padding:2px 20px 14px">
+          <span class="t" style="color:var(--navy)">关注<span>。</span></span>
+          <div class="acts"><div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div></div>
+        </div>
+      </div>
+      <div class="content" style="padding-top:14px">
+        <div class="notif-banner">
+          <div class="nb-mark"><b>B</b><span class="dot"></span></div>
+          <div class="nb-t">
+            <div class="nm">JLi Beauty — ⚡ 空档预约</div>
+            <div class="ms">经典美睫 · 明天下午 2:30 · RM 180</div>
+          </div>
+          <button class="nb-book">预约</button>
+        </div>
+        <div class="feedcard">
+          <div class="fhead">
+            <div class="fav"></div>
+            <div><div class="fn">Lily Wong</div><div class="fs">JLi Beauty · 孟沙</div></div>
+            <span class="fago">2 分钟前</span>
+          </div>
+          <span class="postbadge slot" style="margin-bottom:10px;display:inline-flex">⚡ 空档预约</span>
+          <div class="slotbox">
+            <div class="sv">经典美睫套餐</div>
+            <div class="st">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+              明天 · 6月10日（周二）· 下午 2:30
+            </div>
+            <div class="sp">RM 180</div>
+          </div>
+          <button class="bookbtn">立即预约此档期 →</button>
+          <div class="factions">
+            <div class="heartbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.8z"/></svg>14</div>
+            <span style="font-size:11px;color:#9fc4be;font-weight:600;margin-left:auto">名额有限——另有 2 人正在查看</span>
+          </div>
+        </div>
+        <div class="feedcard">
+          <div class="fhead">
+            <div class="fav teal"></div>
+            <div><div class="fn">Aisha Razak</div><div class="fs">Aisha's Artistry · 安邦</div></div>
+            <span class="fago">3 小时前</span>
+          </div>
+          <span class="postbadge spot" style="margin-bottom:10px;display:inline-flex">✨ 作品聚焦</span>
+          <div class="baimg"><span class="bef">修复前</span><span class="aft">修复后</span></div>
+          <div class="caption">雾眉修复后 72 小时 🌿 自然、立体，完全无痛。</div>
+          <div class="servicetag">雾眉（半永久）· RM 680</div>
+          <button class="softbookbtn">预约同款 →</button>
+          <div class="factions">
+            <div class="heartbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.8z"/></svg>47</div>
+          </div>
+        </div>
+        <div class="scrollnote">动态可滑动 · 来自所有关注美容师的广播帖</div>
+      </div>
+      <div class="bottomnav">
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+        <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg><span class="navlabel">关注</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span class="navlabel">探索</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">我的</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== 空档预约 · 展开 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">帖子</span><span class="ttl">空档预约 · 展开</span><span class="sub">点击预约</span></div>
+    <div class="phone"><div class="screen day">
+      <div class="expheader">
+        <div class="statusbar" style="color:var(--navy)"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar" style="padding:6px 18px 10px"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div class="backrow">
+          <div class="iconbtn" style="background:rgba(255,255,255,.55);border:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+          <span style="flex:1"></span>
+          <div class="iconbtn" style="background:rgba(255,255,255,.55);border:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></div>
+        </div>
+        <div class="expmerch">
+          <div class="expav"></div>
+          <div><div class="expmn">Lily Wong</div><div class="expms">JLi Beauty · 孟沙 · ★ 4.9</div></div>
+          <button class="expfollow">已关注</button>
+        </div>
+      </div>
+      <div class="expbody">
+        <div style="height:14px"></div>
+        <div class="expbadge"><span>⚡</span>空档预约</div>
+        <div class="exptitle">经典美睫套餐<br>——抓住机会。</div>
+        <div class="expsub">有取消空档 🙌 赶快预约，免得被抢走。</div>
+        <div class="expslotbox">
+          <div class="exprow"><span class="k">服务</span><span class="v">经典美睫套餐</span></div>
+          <div class="exprow"><span class="k">日期</span><span class="v">6月10日（周二）</span></div>
+          <div class="exprow"><span class="k">时间</span><span class="v">下午 2:30 – 4:00</span></div>
+          <div class="exprow"><span class="k">时长</span><span class="v">90 分钟</span></div>
+          <div class="exprow"><span class="k">价格</span><span class="v price">RM 180</span></div>
+        </div>
+        <div class="expactions">
+          <div class="hbtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b76a58" stroke-width="2.2" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.8z"/></svg></div>
+          <button class="expbookbtn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+            立即预约
+          </button>
+        </div>
+        <div class="expnote">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3d6b65" stroke-width="2" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+          预约前 24 小时及 2 小时发送提醒——24 小时前可免费取消
+        </div>
+      </div>
+      <div class="bottomnav">
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+        <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg><span class="navlabel">关注</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span class="navlabel">探索</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">我的</span></div>
+      </div>
+    </div></div>
+  </div>
+
+</div>
+</body>
+</html>

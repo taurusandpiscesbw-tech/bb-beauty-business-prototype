@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BB Beauty Business — 中文版（步骤 3、4 ＋ 预约流程）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tiffany:#0ABFB8;--robin:#81D8D0;--pale:#E0F7F5;--navy:#003B36;--darknavy:#002B26;
+    --rose:#E8A89A;--black:#0a0a0a;--card-night:#1a1a1a;--grey-night:#1e1e1e;--grey-text:#AAAAAA;--white:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Manrope','Noto Sans SC',sans-serif;background:#070a0a;
+    background-image:radial-gradient(1200px 600px at 20% -10%, rgba(10,191,184,.10), transparent 60%),
+                     radial-gradient(900px 500px at 100% 100%, rgba(232,168,154,.07), transparent 60%);
+    color:#fff;padding:48px 24px 80px;-webkit-font-smoothing:antialiased;
+  }
+  .board-head{max-width:1600px;margin:0 auto 40px}
+  .board-head .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--tiffany);font-weight:700}
+  .board-head h1{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:800;font-size:32px;margin-top:8px;letter-spacing:-.01em}
+  .board-head p{color:#9fb0ae;margin-top:8px;font-size:14px;max-width:780px;line-height:1.7}
+  .board{max-width:1600px;margin:0 auto;display:flex;gap:34px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .col{width:340px}
+  .col-label{margin:0 4px 14px;display:flex;align-items:baseline;gap:10px}
+  .col-label .num{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--tiffany)}
+  .col-label .ttl{font-size:14px;font-weight:700}
+  .col-label .sub{font-size:11.5px;color:#8a9b99;font-weight:500}
+  .col-label .new{font-size:10px;font-weight:700;letter-spacing:.05em;background:var(--rose);color:#3a1f18;padding:3px 8px;border-radius:999px}
+
+  .phone{width:340px;border-radius:42px;padding:11px;background:linear-gradient(160deg,#2a2c2c,#0c0d0d);box-shadow:0 40px 80px -24px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04) inset}
+  .screen{border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;min-height:680px}
+  .screen.night{background:var(--black);color:#fff}
+  .screen.day{background:var(--pale);color:var(--navy)}
+
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 22px 6px;font-size:13px;font-weight:700}
+  .night .statusbar{color:#fff}
+  .day .statusbar{color:var(--navy)}
+  .statusbar .dots{display:flex;gap:5px;align-items:center}
+
+  .langbar{display:flex;gap:7px;padding:6px 18px 12px}
+  .lang{flex:1;text-align:center;font-size:12px;font-weight:700;padding:7px 0;border-radius:999px}
+  .night .lang.active{background:var(--tiffany);color:var(--darknavy)}
+  .night .lang.idle{background:var(--grey-night);color:var(--grey-text)}
+  .day .lang.active{background:var(--navy);color:#fff}
+  .day .lang.idle{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}
+
+  .regtop{padding:6px 20px 0}
+  .regtop .row{display:flex;align-items:center;gap:14px}
+  .iconbtn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none}
+  .night .iconbtn{background:#161616;border:1px solid #262626}
+  .day .iconbtn{background:#fff;border:1px solid rgba(0,59,54,.12)}
+  .regtop .step{font-size:11.5px;font-weight:700;letter-spacing:.1em}
+  .night .regtop .step{color:var(--tiffany)}
+  .day .regtop .step{color:#2c6b63}
+  .progress{height:5px;border-radius:999px;margin:14px 0 4px;overflow:hidden}
+  .night .progress{background:#1c1c1c}
+  .day .progress{background:#bfe6e1}
+  .progress>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--tiffany),var(--robin))}
+  .day .progress>i{background:linear-gradient(90deg,var(--navy),#0d6b62)}
+
+  .body{padding:8px 20px 18px;flex:1}
+  h2.title{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:800;font-size:25px;line-height:1.2;margin:16px 0 6px;letter-spacing:-.01em}
+  .lede{font-size:13px;line-height:1.6;margin-bottom:16px}
+  .night .lede{color:#9aa7a5}
+  .day .lede{color:#3d6b65}
+
+  .card{background:var(--card-night);border:1px solid #232323;border-radius:18px;padding:15px}
+  .card+.card{margin-top:12px}
+  .card.glow{border-color:rgba(10,191,184,.3);box-shadow:0 0 0 1px rgba(10,191,184,.12)}
+  .card-h{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--grey-text);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+  .card-h .badge-new{background:rgba(10,191,184,.16);color:var(--tiffany);font-size:10px;padding:3px 8px;border-radius:999px;letter-spacing:0}
+
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--grey-text);margin-bottom:7px}
+  .inp{width:100%;background:#141414;border:1px solid #262626;border-radius:13px;padding:13px;font-family:inherit;font-size:14px;font-weight:600;color:#fff;display:flex;align-items:center;justify-content:space-between}
+  .inp.placeholder{color:#5c6664;font-weight:500}
+  .two{display:flex;gap:11px}
+  .two .field{flex:1}
+  .pills{display:flex;gap:7px}
+  .pill{flex:1;text-align:center;padding:10px 4px;border-radius:11px;font-size:12px;font-weight:700;border:1px solid #2a2a2a;background:#141414;color:#aab5b3;cursor:pointer}
+  .pill.sel{background:var(--tiffany);color:var(--darknavy);border-color:var(--tiffany)}
+  .hint{font-size:11px;color:#7b8886;margin-top:6px;display:flex;gap:6px;align-items:flex-start;line-height:1.5}
+
+  .svc-mini{display:flex;align-items:center;gap:11px;background:#141414;border:1px solid #242424;border-radius:14px;padding:12px;margin-top:9px}
+  .svc-mini .nm{font-weight:700;font-size:13px}
+  .svc-mini .mt{font-size:11px;color:#8a9795;margin-top:3px;font-weight:500}
+  .svc-mini .pr{margin-left:auto;font-family:'Playfair Display',serif;font-weight:800;font-size:16px}
+  .addbtn{margin-top:13px;width:100%;border:1.5px dashed #2e3a39;background:transparent;color:var(--tiffany);font-family:inherit;font-weight:700;font-size:12.5px;padding:12px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer}
+
+  .day-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #222}
+  .day-row:last-child{border-bottom:none}
+  .day-row .d{display:flex;align-items:center;gap:11px}
+  .day-row .dn{font-weight:700;font-size:13px;width:64px}
+  .toggle{width:38px;height:22px;border-radius:999px;position:relative;flex:none}
+  .toggle.on{background:var(--tiffany)}
+  .toggle.off{background:#333}
+  .toggle i{position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff}
+  .toggle.on i{left:18px}.toggle.off i{left:2px}
+  .hours{font-size:12px;font-weight:600;color:#cfd6d5}
+  .hours.closed{color:#5f6b69}
+  .rule-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #222;gap:12px}
+  .rule-row:last-child{border-bottom:none}
+  .rule-row .rl{font-weight:700;font-size:13px}
+  .rule-row .rs{font-size:11px;color:#8a9795;margin-top:3px;font-weight:500;line-height:1.4;max-width:175px}
+  .rule-row .val{font-size:12.5px;font-weight:700;color:#cfd6d5;display:flex;align-items:center;gap:5px;white-space:nowrap}
+  .stepper{display:flex;align-items:center;gap:10px}
+  .stepper b{width:24px;text-align:center;font-size:14px}
+  .stepper span{width:26px;height:26px;border-radius:8px;background:#222;display:grid;place-items:center;color:var(--tiffany);font-weight:800}
+  .ov-chip{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:12px;background:#141414;border:1px solid #242424;font-size:12px;font-weight:600;margin-top:8px}
+  .ov-chip .tagdot{width:8px;height:8px;border-radius:50%;flex:none}
+
+  .cta{margin-top:18px;width:100%;border:none;font-family:inherit;font-weight:700;font-size:14.5px;padding:15px;border-radius:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+  .night .cta{background:var(--tiffany);color:var(--darknavy)}
+  .day .cta{background:var(--navy);color:#fff}
+
+  .day-header{background:var(--robin)}
+  .day .statusbar.onhead{color:var(--navy)}
+  .bk-top{display:flex;align-items:center;gap:12px;padding:2px 18px 16px}
+  .bk-top .iconbtn{background:rgba(255,255,255,.55);border:none}
+  .bk-merch{display:flex;align-items:center;gap:9px}
+  .bk-merch .av{width:32px;height:32px;border-radius:10px;background:linear-gradient(150deg,#caa,#8c5d52);flex:none}
+  .bk-merch .mn{font-weight:700;font-size:13px;color:var(--navy)}
+  .bk-merch .ms{font-size:11px;color:#2c6b63;font-weight:500;margin-top:1px}
+  .dcard{background:#fff;border-radius:18px;padding:15px;box-shadow:0 12px 28px -20px rgba(0,59,54,.5)}
+
+  .selrow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:15px;padding:14px;margin-top:10px;border:1.5px solid transparent;box-shadow:0 10px 22px -20px rgba(0,59,54,.5)}
+  .selrow.sel{border-color:var(--navy)}
+  .selrow .radio{width:20px;height:20px;border-radius:50%;border:2px solid #b9d8d3;flex:none}
+  .selrow.sel .radio{border-color:var(--navy);background:radial-gradient(circle at center, var(--navy) 0 5px, transparent 6px)}
+  .selrow .info{flex:1}
+  .selrow .nm{font-weight:700;font-size:13.5px;color:var(--navy)}
+  .selrow .mt{font-size:11.5px;color:#3d6b65;margin-top:3px;font-weight:500}
+  .selrow .pr{font-family:'Playfair Display',serif;font-weight:800;font-size:17px;color:var(--navy)}
+  .dep{font-size:10.5px;font-weight:700;color:#b76a58}
+
+  .datestrip{display:flex;gap:8px;overflow:hidden;padding:2px 0}
+  .datechip{flex:none;width:50px;text-align:center;background:#fff;border-radius:14px;padding:9px 0;border:1px solid rgba(0,59,54,.1)}
+  .datechip.sel{background:var(--navy);color:#fff}
+  .datechip.off{opacity:.4}
+  .datechip .dow{font-size:10px;font-weight:700;opacity:.8}
+  .datechip .dnum{font-family:'Playfair Display',serif;font-weight:800;font-size:18px;margin-top:1px}
+  .reclabel{font-size:11.5px;font-weight:700;letter-spacing:.04em;color:#2c6b63;margin:16px 0 8px;display:flex;align-items:center;gap:7px}
+  .slotgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+  .slot{background:#fff;border:1px solid rgba(0,59,54,.12);border-radius:12px;padding:12px 0;text-align:center;font-weight:700;font-size:12.5px;color:var(--navy);position:relative}
+  .slot.sel{background:var(--navy);color:#fff}
+  .slot.rec{border-color:var(--tiffany)}
+  .slot.off{background:transparent;color:#9fc4be;border-style:dashed;text-decoration:line-through}
+  .slot .rectag{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:var(--tiffany);color:var(--darknavy);font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .smartnote{font-size:11.5px;color:#3d6b65;background:rgba(10,191,184,.12);border:1px solid rgba(10,191,184,.25);border-radius:12px;padding:10px 12px;margin-top:14px;line-height:1.55;font-weight:600;display:flex;gap:8px}
+
+  .sumrow{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(0,59,54,.08);font-size:13px;gap:10px}
+  .sumrow:last-child{border-bottom:none}
+  .sumrow .k{color:#3d6b65;font-weight:600}
+  .sumrow .k small{display:block;color:#7da59f;font-weight:500;font-size:11px;margin-top:2px}
+  .sumrow .v{font-weight:700;color:var(--navy);text-align:right;white-space:nowrap}
+  .sumrow .v small{display:block;color:#7da59f;font-weight:500;font-size:11px;margin-top:2px}
+  .sumrow .v.disc{color:#b76a58}
+  .totrow{display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:12px;border-top:1.5px solid rgba(0,59,54,.15)}
+  .totrow .k{font-weight:700;color:var(--navy);font-size:14px}
+  .totrow .v{font-family:'Playfair Display',serif;font-weight:800;color:var(--navy);font-size:22px;text-align:right}
+  .totrow .v small{font-size:11px;color:#3d6b65;font-weight:600;display:block;text-align:right;font-family:'Noto Sans SC'}
+  .pay{display:flex;gap:9px;margin-top:8px}
+  .paybtn{flex:1;background:#fff;border:1.5px solid rgba(0,59,54,.14);border-radius:13px;padding:13px 8px;text-align:center;font-weight:700;font-size:12.5px;color:var(--navy);display:flex;align-items:center;justify-content:center;gap:7px}
+  .paybtn.sel{box-shadow:0 0 0 1.5px var(--navy) inset;border-color:var(--navy)}
+  .reminder{font-size:11.5px;color:#3d6b65;margin-top:14px;display:flex;gap:8px;line-height:1.55;font-weight:600}
+  .dsecttl{font-size:11.5px;font-weight:700;letter-spacing:.04em;color:#2c6b63;margin:0 0 10px}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <div class="kicker">BB Beauty Business · 中文版界面</div>
+  <h1>更新后的步骤 3 与 4 ＋ 三步预约流程（中文版）</h1>
+  <p>步骤 3 新增了每项服务的「缓冲时间」；步骤 4 新增了一次性设定的「预约规则」卡片（时段间隔、最短提前时间、可预约范围、同时接待人数，以及紧凑档期规则）。预约流程随后套用这些规则——优先显示连续的「推荐」时段，让美容师的档期保持紧凑，同时不剥夺顾客的选择权。</p>
+</div>
+
+<div class="board">
+
+  <!-- ===== 步骤 3 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">步骤 3</span><span class="ttl">服务菜单</span><span class="new">＋缓冲</span></div>
+    <div class="phone"><div class="screen night">
+      <div class="statusbar"><span>9:41</span><span class="dots">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+      </span></div>
+      <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+      <div class="regtop">
+        <div class="row"><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><span class="step">第 3 / 6 步 · 服务</span></div>
+        <div class="progress"><i style="width:50%"></i></div>
+      </div>
+      <div class="body">
+        <h2 class="title">建立你的<br>服务菜单。</h2>
+        <p class="lede">设定价格、每项服务所需的时长，以及服务后的清理缓冲时间。</p>
+
+        <div class="card">
+          <div class="card-h">新增服务</div>
+          <div class="field"><label>服务名称</label><div class="inp">经典美睫套餐</div></div>
+          <div class="two">
+            <div class="field"><label>时长</label><div class="inp">90 分钟<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8a9795" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div></div>
+            <div class="field"><label>价格（RM）</label><div class="inp">180</div></div>
+          </div>
+          <div class="field">
+            <label>服务后缓冲 · 清理</label>
+            <div class="pills"><div class="pill">0</div><div class="pill sel">15 分钟</div><div class="pill">30 分钟</div></div>
+            <div class="hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--tiffany)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 1.5" stroke-linecap="round"/></svg>消毒与整理时间——在顾客之间保留空档，让你不必赶场。</div>
+          </div>
+          <div class="field" style="margin-bottom:4px">
+            <label>预约订金</label>
+            <div class="pills"><div class="pill sel">RM 0</div><div class="pill">RM 50</div><div class="pill">RM 100</div></div>
+          </div>
+          <button class="addbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>加入菜单</button>
+        </div>
+
+        <div class="card-h" style="margin:18px 0 0">你的菜单 · 2 项服务</div>
+        <div class="svc-mini"><div><div class="nm">雾眉（半永久）</div><div class="mt">120 分钟 · ＋30 缓冲 · RM 50 订金</div></div><span class="pr">RM 680</span></div>
+        <div class="svc-mini"><div><div class="nm">睫毛上翘＋染色</div><div class="mt">60 分钟 · ＋15 缓冲 · 无订金</div></div><span class="pr">RM 140</span></div>
+
+        <button class="cta">继续</button>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== 步骤 4 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">步骤 4</span><span class="ttl">营业时间</span><span class="new">＋规则</span></div>
+    <div class="phone"><div class="screen night">
+      <div class="statusbar"><span>9:41</span><span class="dots">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+        <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+      </span></div>
+      <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+      <div class="regtop">
+        <div class="row"><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><span class="step">第 4 / 6 步 · 营业时间</span></div>
+        <div class="progress"><i style="width:66%"></i></div>
+      </div>
+      <div class="body">
+        <h2 class="title">营业时间与<br>预约规则。</h2>
+        <p class="lede">设定每周营业时间，再设定决定顾客可选时段的规则。</p>
+
+        <div class="card">
+          <div class="card-h">每周营业时间 <span style="color:var(--tiffany);font-weight:700;letter-spacing:0">套用到全部</span></div>
+          <div class="day-row"><div class="d"><div class="toggle on"><i></i></div><span class="dn">周一</span></div><span class="hours">9:00 – 18:00</span></div>
+          <div class="day-row"><div class="d"><div class="toggle on"><i></i></div><span class="dn">周二</span></div><span class="hours">9:00 – 18:00</span></div>
+          <div class="day-row"><div class="d"><div class="toggle on"><i></i></div><span class="dn">周三至五</span></div><span class="hours">9:00 – 18:00</span></div>
+          <div class="day-row"><div class="d"><div class="toggle on"><i></i></div><span class="dn">周六</span></div><span class="hours">10:00 – 16:00</span></div>
+          <div class="day-row"><div class="d"><div class="toggle off"><i></i></div><span class="dn">周日</span></div><span class="hours closed">休息</span></div>
+        </div>
+
+        <div class="card glow">
+          <div class="card-h">预约规则 <span class="badge-new">新</span></div>
+          <div class="rule-row">
+            <div><div class="rl">时段间隔</div><div class="rs">每隔多久可开始一个预约</div></div>
+            <div class="pills" style="width:150px"><div class="pill">15</div><div class="pill sel">30</div><div class="pill">60</div></div>
+          </div>
+          <div class="rule-row">
+            <div><div class="rl">最短提前时间</div><div class="rs">不接受比这更临近的预约</div></div>
+            <div class="val">2 小时<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8a9795" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+          </div>
+          <div class="rule-row">
+            <div><div class="rl">最多可提前</div><div class="rs">顾客最多可提前多久预约</div></div>
+            <div class="val">60 天<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8a9795" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+          </div>
+          <div class="rule-row">
+            <div><div class="rl">同时接待人数</div><div class="rs">可同时进行的座位／房间数</div></div>
+            <div class="stepper"><span>−</span><b>1</b><span>+</span></div>
+          </div>
+          <div class="rule-row">
+            <div><div class="rl">保持档期紧凑</div><div class="rs">隐藏会造成无法填补空档的时段</div></div>
+            <div class="toggle on"><i></i></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-h">特殊日期调整</div>
+          <div class="ov-chip"><span class="tagdot" style="background:var(--rose)"></span>6月14日 · 休息 — 哈芝节</div>
+          <div class="ov-chip"><span class="tagdot" style="background:var(--tiffany)"></span>6月22日 · 特别时段 9:00 – 13:00</div>
+          <button class="addbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>新增特殊日期</button>
+        </div>
+
+        <button class="cta">继续</button>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== 预约 1 — 选择服务 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">预约 1</span><span class="ttl">选择服务</span><span class="sub">顾客端 · 日间</span></div>
+    <div class="phone"><div class="screen day">
+      <div class="day-header">
+        <div class="statusbar onhead"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar" style="padding:6px 18px 10px"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div class="bk-top">
+          <div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+          <div class="bk-merch"><div class="av"></div><div><div class="mn">Lily Wong</div><div class="ms">JLi Beauty · 孟沙</div></div></div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="step" style="color:#2c6b63;font-size:11.5px;font-weight:700;letter-spacing:.1em">第 1 / 3 步</span>
+        <div class="progress" style="margin:10px 0 4px"><i style="width:33%"></i></div>
+        <h2 class="title">选择服务。</h2>
+
+        <div class="selrow sel">
+          <div class="radio"></div>
+          <div class="info"><div class="nm">雾眉（半永久）</div><div class="mt">120 分钟 · <span class="dep">RM 50 订金</span></div></div>
+          <div class="pr">RM 680</div>
+        </div>
+        <div class="selrow">
+          <div class="radio"></div>
+          <div class="info"><div class="nm">经典美睫套餐</div><div class="mt">90 分钟 · 无订金</div></div>
+          <div class="pr">RM 180</div>
+        </div>
+        <div class="selrow">
+          <div class="radio"></div>
+          <div class="info"><div class="nm">睫毛上翘＋染色</div><div class="mt">60 分钟 · 无订金</div></div>
+          <div class="pr">RM 140</div>
+        </div>
+
+        <div class="smartnote">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d7d76" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>
+          首次光临？首单可享 <b style="color:#0d7d76">20% 折扣</b> — 结账时自动套用。
+        </div>
+
+        <button class="cta">继续<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== 预约 2 — 选择时间 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">预约 2</span><span class="ttl">选择时间</span><span class="new">推荐</span></div>
+    <div class="phone"><div class="screen day">
+      <div class="day-header">
+        <div class="statusbar onhead"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar" style="padding:6px 18px 10px"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div class="bk-top">
+          <div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+          <div class="bk-merch"><div class="av"></div><div><div class="mn">雾眉（半永久）</div><div class="ms">120 分钟 · 美容师 Lily Wong</div></div></div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="step" style="color:#2c6b63;font-size:11.5px;font-weight:700;letter-spacing:.1em">第 2 / 3 步</span>
+        <div class="progress" style="margin:10px 0 4px"><i style="width:66%"></i></div>
+        <h2 class="title">选择时间。</h2>
+
+        <div class="datestrip">
+          <div class="datechip"><div class="dow">周一</div><div class="dnum">9</div></div>
+          <div class="datechip sel"><div class="dow">周二</div><div class="dnum">10</div></div>
+          <div class="datechip"><div class="dow">周三</div><div class="dnum">11</div></div>
+          <div class="datechip"><div class="dow">周四</div><div class="dnum">12</div></div>
+          <div class="datechip"><div class="dow">周五</div><div class="dnum">13</div></div>
+          <div class="datechip off"><div class="dow">周日</div><div class="dnum">15</div></div>
+        </div>
+
+        <div class="reclabel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0ABFB8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>
+          推荐时段
+        </div>
+        <div class="slotgrid">
+          <div class="slot rec sel"><span class="rectag">最佳</span>9:00</div>
+          <div class="slot rec"><span class="rectag">更早</span>2:00</div>
+          <div class="slot">4:00</div>
+        </div>
+
+        <div class="reclabel" style="color:#3d6b65">所有时段</div>
+        <div class="slotgrid">
+          <div class="slot">9:30</div>
+          <div class="slot">11:30</div>
+          <div class="slot off">12:30</div>
+          <div class="slot">2:30</div>
+          <div class="slot">3:30</div>
+          <div class="slot">4:30</div>
+        </div>
+
+        <div class="smartnote">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d7d76" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+          推荐时段能让 Lily 的档期更顺畅 — 你通常也能更早被安排。
+        </div>
+
+        <button class="cta">继续<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== 预约 3 — 确认付款 ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">预约 3</span><span class="ttl">确认付款</span><span class="sub">订金 · FPX／卡</span></div>
+    <div class="phone"><div class="screen day">
+      <div class="day-header">
+        <div class="statusbar onhead"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar" style="padding:6px 18px 10px"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div class="bk-top">
+          <div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+          <div class="bk-merch"><div class="av"></div><div><div class="mn">确认预约</div><div class="ms">美容师 Lily Wong · JLi Beauty</div></div></div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="step" style="color:#2c6b63;font-size:11.5px;font-weight:700;letter-spacing:.1em">第 3 / 3 步</span>
+        <div class="progress" style="margin:10px 0 14px"><i style="width:100%"></i></div>
+
+        <div class="dcard" style="margin-bottom:11px">
+          <div class="sumrow"><span class="k">服务</span><span class="v">雾眉（半永久）</span></div>
+          <div class="sumrow"><span class="k">时间</span><span class="v">6月10日（周二）· 上午 9:00<small>120 分钟 · 11:00 结束</small></span></div>
+          <div class="sumrow"><span class="k">服务价格</span><span class="v">RM 680</span></div>
+          <div class="sumrow"><span class="k">首单优惠<small>20% 折扣</small></span><span class="v disc">− RM 136</span></div>
+          <div class="totrow"><span class="k">合计</span><span class="v">RM 544<small>现付订金 RM 50</small></span></div>
+        </div>
+
+        <div class="dcard" style="margin-bottom:11px">
+          <div class="dsecttl">订金付款方式</div>
+          <div class="pay">
+            <div class="paybtn sel"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>FPX 网银</div>
+            <div class="paybtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 9h20M6 15h4"/></svg>信用卡</div>
+          </div>
+          <div class="sumrow" style="margin-top:8px"><span class="k">现付订金</span><span class="v">RM 50</span></div>
+          <div class="sumrow"><span class="k">当天余额</span><span class="v">RM 494</span></div>
+        </div>
+
+        <div class="reminder">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0d7d76" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+          我们会在预约前 24 小时及 2 小时发送提醒 — 让你不会错过。
+        </div>
+
+        <button class="cta">确认并支付 RM 50</button>
+      </div>
+    </div></div>
+  </div>
+
+</div>
+</body>
+</html>
