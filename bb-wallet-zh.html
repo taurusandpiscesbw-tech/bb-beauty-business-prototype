@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BB Beauty Business — 收入钱包（中文版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--tiffany:#0ABFB8;--robin:#81D8D0;--pale:#E0F7F5;--navy:#003B36;--darknavy:#002B26;--rose:#E8A89A;--black:#0a0a0a;--card:#1a1a1a;--grey:#1e1e1e;--gt:#AAAAAA;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope','Noto Sans SC',sans-serif;background:#070a0a;background-image:radial-gradient(1100px 500px at 30% 0%,rgba(10,191,184,.09),transparent 55%),radial-gradient(800px 400px at 90% 100%,rgba(232,168,154,.07),transparent 55%);color:#fff;padding:48px 24px 80px;-webkit-font-smoothing:antialiased;}
+  .board-head{max-width:1500px;margin:0 auto 40px}
+  .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--tiffany);font-weight:700}
+  .board-head h1{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:800;font-size:32px;margin-top:8px}
+  .board-head p{color:#9fb0ae;margin-top:8px;font-size:14px;max-width:760px;line-height:1.7}
+  .board{max-width:1500px;margin:0 auto;display:flex;gap:34px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .col{width:340px}
+  .col-label{margin:0 4px 14px;display:flex;align-items:baseline;gap:10px}
+  .col-label .num{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--tiffany)}
+  .col-label .ttl{font-size:14px;font-weight:700}
+  .col-label .sub{font-size:11.5px;color:#8a9b99;font-weight:500}
+  .phone{width:340px;border-radius:42px;padding:11px;background:linear-gradient(160deg,#2a2c2c,#0c0d0d);box-shadow:0 40px 80px -24px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04) inset}
+  .screen{border-radius:32px;overflow:hidden;display:flex;flex-direction:column;min-height:700px;background:var(--black);color:#fff}
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 22px 6px;font-size:13px;font-weight:700;color:#fff}
+  .statusbar .dots{display:flex;gap:5px;align-items:center}
+  .langbar{display:flex;gap:7px;padding:6px 18px 10px}
+  .lang{flex:1;text-align:center;font-size:12px;font-weight:700;padding:7px 0;border-radius:999px}
+  .lang.active{background:var(--tiffany);color:var(--darknavy)}
+  .lang.idle{background:var(--grey);color:var(--gt)}
+  .appbar{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 14px}
+  .appbar .t{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:700;font-size:22px}
+  .appbar .t span{color:var(--tiffany)}
+  .iconbtn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex:none;background:#181818;border:1px solid #282828}
+  .balcard{margin:0 20px 16px;border-radius:22px;padding:22px;background:linear-gradient(135deg,#003B36 0%,#0a4a44 60%,#0d5a52 100%);border:1px solid rgba(10,191,184,.3);position:relative;overflow:hidden}
+  .balcard::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(10,191,184,.18),transparent 65%)}
+  .balcard .blabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(129,216,208,.7);margin-bottom:10px}
+  .balcard .amount{font-family:'Playfair Display',serif;font-weight:800;font-size:44px;color:#fff;line-height:1;letter-spacing:-.02em;position:relative}
+  .balcard .amount .rm{font-size:20px;vertical-align:top;margin-top:8px;display:inline-block;margin-right:3px}
+  .balcard .nextrow{display:flex;align-items:center;gap:9px;margin-top:14px}
+  .balcard .nextpill{display:flex;align-items:center;gap:7px;background:rgba(0,0,0,.3);backdrop-filter:blur(8px);border:1px solid rgba(10,191,184,.25);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:700;color:#81D8D0}
+  .balcard .nextpill .pldot{width:7px;height:7px;border-radius:50%;background:var(--tiffany);animation:blink 1.8s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  .balcard .footnote{font-size:10.5px;color:rgba(129,216,208,.6);font-weight:600;margin-top:10px}
+  .statsrow{display:flex;gap:11px;padding:0 20px;margin-bottom:16px}
+  .statchip{flex:1;background:var(--card);border:1px solid #242424;border-radius:16px;padding:14px}
+  .statchip .sl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gt);margin-bottom:6px}
+  .statchip .sv{font-family:'Playfair Display',serif;font-weight:800;font-size:22px;line-height:1}
+  .statchip .sv.rose{color:var(--rose)}
+  .statchip .sd{font-size:10.5px;color:#596e6c;font-weight:600;margin-top:3px}
+  .sectl{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gt);padding:0 20px;margin-bottom:10px}
+  .chartcard{margin:0 20px 16px;background:var(--card);border:1px solid #222;border-radius:18px;padding:16px}
+  .chartcard .ch{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+  .chartcard .ch .ct{font-weight:700;font-size:13px}
+  .chartcard .ch .cv{font-family:'Playfair Display',serif;font-weight:800;font-size:17px;color:var(--tiffany)}
+  .bars{display:flex;gap:7px;align-items:flex-end;height:70px}
+  .bar{flex:1;border-radius:5px 5px 0 0}
+  .bar.past{background:#1e3a38}
+  .bar.cur{background:var(--tiffany)}
+  .barlabels{display:flex;gap:7px;margin-top:7px}
+  .barlabel{flex:1;text-align:center;font-size:8.5px;color:#4a6a67;font-weight:700}
+  .barlabel.cur{color:var(--tiffany)}
+  .txcard{margin:0 20px;background:var(--card);border:1px solid #222;border-radius:18px;overflow:hidden}
+  .txrow{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid #1e1e1e}
+  .txrow:last-child{border-bottom:none}
+  .txicon{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;flex:none;font-size:15px}
+  .txicon.booking{background:rgba(10,191,184,.12)}
+  .txicon.payout{background:rgba(232,168,154,.12)}
+  .txinfo{flex:1;min-width:0}
+  .txname{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .txdate{font-size:11px;color:#596e6c;font-weight:600;margin-top:2px}
+  .txamt{text-align:right}
+  .txamt .pos{font-family:'Playfair Display',serif;font-weight:800;font-size:15px;color:var(--tiffany)}
+  .txamt .net{font-size:10px;color:#596e6c;font-weight:600;margin-top:2px}
+  .bottomnav{display:flex;justify-content:space-around;align-items:center;padding:12px 0 20px;margin-top:auto;background:#0d0d0d;border-top:1px solid #1c1c1c}
+  .navitem{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 8px;cursor:pointer;color:#596e6c}
+  .navitem.active{color:var(--tiffany)}
+  .navlabel{font-size:9.5px;font-weight:700}
+  .successbg{flex:1;display:flex;flex-direction:column;padding:0 20px 20px}
+  .successglow{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,#003B36,#0ABFB8);display:grid;place-items:center;margin:28px auto 24px;box-shadow:0 0 0 20px rgba(10,191,184,.08),0 0 0 40px rgba(10,191,184,.04);font-size:42px}
+  .successtitle{font-family:'Playfair Display','Noto Sans SC',serif;font-weight:800;font-size:24px;text-align:center;line-height:1.3;margin-bottom:8px}
+  .successsub{font-size:13px;color:#8aaba8;text-align:center;line-height:1.6;margin-bottom:24px;font-weight:500}
+  .successcard{background:var(--card);border:1px solid #242424;border-radius:18px;padding:16px;margin-bottom:14px}
+  .scrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1e1e1e;font-size:13px}
+  .scrow:last-child{border-bottom:none}
+  .scrow .k{color:#8aaba8;font-weight:600}
+  .scrow .v{font-weight:800}
+  .scrow .v.teal{color:var(--tiffany)}
+  .bank-pill{display:flex;align-items:center;gap:10px;background:#111;border:1px solid #1e2b2a;border-radius:14px;padding:12px 14px;margin-bottom:20px}
+  .bank-pill .bi{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#f5a623,#f97316);display:grid;place-items:center;font-weight:900;font-size:12px;color:#fff;flex:none}
+  .bank-pill .bn{font-weight:800;font-size:13px}
+  .bank-pill .ba{font-size:11px;color:#596e6c;font-weight:600;margin-top:2px}
+  .viewbtn{width:100%;border:none;font-family:inherit;font-weight:800;font-size:14px;padding:15px;border-radius:15px;cursor:pointer;background:var(--tiffany);color:var(--darknavy);display:flex;align-items:center;justify-content:center;gap:8px}
+  .backrow{display:flex;align-items:center;gap:14px;padding:8px 20px 14px}
+  .backrow .ptitle{font-weight:800;font-size:15px;flex:1}
+  .detailbody{padding:0 20px;flex:1}
+  .detailhead{background:linear-gradient(135deg,#0d1a18,#111f1e);border:1px solid #1e3a38;border-radius:18px;padding:16px;margin-bottom:14px}
+  .dh-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(10,191,184,.14);border:1px solid rgba(10,191,184,.25);border-radius:999px;font-size:10.5px;font-weight:800;color:var(--tiffany);padding:4px 11px;margin-bottom:12px}
+  .dh-svc{font-weight:800;font-size:16px;margin-bottom:4px}
+  .dh-sub{font-size:12px;color:#596e6c;font-weight:600;display:flex;align-items:center;gap:8px}
+  .breakdowncard{background:var(--card);border:1px solid #242424;border-radius:18px;padding:16px;margin-bottom:14px}
+  .brow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #1e1e1e;font-size:13px}
+  .brow:last-child{border-bottom:none}
+  .brow .k{color:#8aaba8;font-weight:600}
+  .brow .v{font-weight:800}
+  .brow .v.deduct{color:#c97d6c}
+  .brow .v.earn{color:var(--tiffany)}
+  .brow.total{padding-top:13px;margin-top:4px}
+  .brow.total .k{font-weight:800;color:#fff;font-size:14px}
+  .brow.total .v{font-family:'Playfair Display',serif;font-size:22px;color:var(--tiffany)}
+  .statuschip{display:inline-flex;align-items:center;gap:7px;background:rgba(10,191,184,.1);border:1px solid rgba(10,191,184,.2);border-radius:12px;padding:10px 14px;font-size:12px;font-weight:700;color:#81D8D0;margin-bottom:18px}
+  .statuschip .dot{width:7px;height:7px;border-radius:50%;background:var(--tiffany);animation:blink 1.8s infinite}
+  .settingbody{padding:0 20px;flex:1}
+  .bankbig{background:linear-gradient(135deg,#003B36,#0a4a44);border:1px solid rgba(10,191,184,.3);border-radius:20px;padding:18px;margin-bottom:16px;position:relative;overflow:hidden}
+  .bankbig::before{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(10,191,184,.08)}
+  .bankbig .bl{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(129,216,208,.65);margin-bottom:10px}
+  .bankbig .bname{font-weight:800;font-size:16px;margin-bottom:4px}
+  .bankbig .bacct{font-size:13px;color:#81D8D0;font-weight:700;letter-spacing:.08em;margin-bottom:2px}
+  .bankbig .bholder{font-size:12px;color:rgba(129,216,208,.65);font-weight:600}
+  .bankbig .bverified{display:inline-flex;align-items:center;gap:5px;background:rgba(10,191,184,.15);border-radius:999px;padding:4px 10px;font-size:10px;font-weight:800;color:var(--tiffany);margin-top:12px}
+  .settingrow{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1a1a1a;gap:12px}
+  .settingrow:last-child{border-bottom:none}
+  .settingrow .rl{font-weight:700;font-size:13px}
+  .settingrow .rs{font-size:11px;color:#596e6c;font-weight:500;margin-top:3px;line-height:1.45}
+  .settingrow .rv{font-size:12px;font-weight:700;color:#cfd6d5;text-align:right;line-height:1.4}
+  .toggle{width:38px;height:22px;border-radius:999px;position:relative;flex:none}
+  .toggle.on{background:var(--tiffany)}.toggle.off{background:#333}
+  .toggle i{position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff}
+  .toggle.on i{left:18px}.toggle.off i{left:2px}
+  .changebtn{width:100%;border:1.5px solid #2a3a38;background:transparent;color:var(--tiffany);font-family:inherit;font-weight:700;font-size:13.5px;padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;margin-top:6px}
+  .settingscard{background:var(--card);border:1px solid #222;border-radius:18px;padding:0 16px;margin-bottom:14px}
+</style>
+</head>
+<body>
+<div class="board-head">
+  <div class="kicker">BB Beauty Business · 收入钱包</div>
+  <h1>收入钱包 — 每周一自动打款（中文版）</h1>
+  <p>每周一自动将款项转入美容师的注册银行账户，无需任何操作。商家可查看余额、收益趋势图、累计总收入（成就感数字），以及完整的交易记录。每笔预约收入的 93% 归商家所有，7% 平台费用在每笔交易中透明显示。</p>
+</div>
+<div class="board">
+
+<!-- 收入钱包主页 -->
+<div class="col">
+  <div class="col-label"><span class="num">钱包</span><span class="ttl">收入总览</span><span class="sub">主页</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="appbar"><span class="t">钱包<span>。</span></span><div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div></div>
+    <div class="balcard">
+      <div class="blabel">待打款余额</div>
+      <div class="amount"><span class="rm">RM</span>1,247<span style="font-size:26px">.50</span></div>
+      <div class="nextrow"><div class="nextpill"><span class="pldot"></span>下次打款 · 周一 6月2日</div></div>
+      <div class="footnote">93% 归你所有 · 7% 平台服务费 · 每周一自动打款</div>
+    </div>
+    <div class="statsrow">
+      <div class="statchip"><div class="sl">本月收入</div><div class="sv">RM 3,840</div><div class="sd">↑ 较上月增加 18%</div></div>
+      <div class="statchip"><div class="sl">累计总收入</div><div class="sv rose">RM 24,680</div><div class="sd">自 2025年6月起</div></div>
+    </div>
+    <div class="sectl">每周收益</div>
+    <div class="chartcard">
+      <div class="ch"><span class="ct">近 8 周</span><span class="cv">↑ 持续上升</span></div>
+      <div class="bars"><div class="bar past" style="height:28%"></div><div class="bar past" style="height:39%"></div><div class="bar past" style="height:23%"></div><div class="bar past" style="height:57%"></div><div class="bar past" style="height:48%"></div><div class="bar past" style="height:73%"></div><div class="bar past" style="height:65%"></div><div class="bar cur" style="height:83%"></div></div>
+      <div class="barlabels"><div class="barlabel">第1周</div><div class="barlabel">第2周</div><div class="barlabel">第3周</div><div class="barlabel">第4周</div><div class="barlabel">第5周</div><div class="barlabel">第6周</div><div class="barlabel">第7周</div><div class="barlabel cur">本周</div></div>
+    </div>
+    <div class="sectl">最近交易</div>
+    <div class="txcard">
+      <div class="txrow"><div class="txicon booking">💆</div><div class="txinfo"><div class="txname">雾眉（半永久）</div><div class="txdate">6月10日（周二）· Sarah Tan</div></div><div class="txamt"><div class="pos">+RM 632</div><div class="net">扣除7%后</div></div></div>
+      <div class="txrow"><div class="txicon booking">👁</div><div class="txinfo"><div class="txname">经典美睫套餐</div><div class="txdate">6月9日（周一）· Priya R.</div></div><div class="txamt"><div class="pos">+RM 167</div><div class="net">扣除7%后</div></div></div>
+      <div class="txrow"><div class="txicon payout">🏦</div><div class="txinfo"><div class="txname">每周打款</div><div class="txdate">6月2日（周一）· 马来亚银行 ****4821</div></div><div class="txamt"><div class="pos" style="color:var(--rose)">RM 980</div><div class="net">已转账</div></div></div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 打款成功 -->
+<div class="col">
+  <div class="col-label"><span class="num">打款</span><span class="ttl">周一打款通知</span><span class="sub">庆祝时刻</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="successbg">
+      <div class="successglow">💸</div>
+      <div class="successtitle">款项已成功<br>转出！</div>
+      <div class="successsub">RM 1,247.50 已发送至你的马来亚银行账户，预计 1–2 个工作日内到账。</div>
+      <div class="bank-pill"><div class="bi">MB</div><div><div class="bn">马来亚银行</div><div class="ba">**** **** 4821 · 黄美玲</div></div></div>
+      <div class="successcard">
+        <div class="scrow"><span class="k">打款金额</span><span class="v teal">RM 1,247.50</span></div>
+        <div class="scrow"><span class="k">包含预约数</span><span class="v">6 笔预约</span></div>
+        <div class="scrow"><span class="k">结算周期</span><span class="v">5月27日 – 6月2日</span></div>
+        <div class="scrow"><span class="k">平台服务费（7%）</span><span class="v" style="color:#c97d6c">−RM 93.96</span></div>
+        <div class="scrow"><span class="k">税前总收入</span><span class="v">RM 1,341.46</span></div>
+      </div>
+      <button class="viewbtn">查看交易明细</button>
+      <div style="text-align:center;margin-top:16px;font-size:12px;color:#4a6a67;font-weight:600">下次打款 · 6月9日（周一）· 继续加油！🎯</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 交易明细 -->
+<div class="col">
+  <div class="col-label"><span class="num">明细</span><span class="ttl">预约收费详情</span><span class="sub">93% / 7% 分成</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="backrow"><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><span class="ptitle">预约收费明细</span></div>
+    <div class="detailbody">
+      <div class="detailhead"><div class="dh-badge">✅ 已完成</div><div class="dh-svc">雾眉（半永久）</div><div class="dh-sub"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>6月10日（周二）· 上午9:00 · Sarah Tan</div></div>
+      <div class="statuschip"><span class="dot"></span>将纳入下次打款 · 6月2日（周一）</div>
+      <div class="breakdowncard">
+        <div class="brow"><span class="k">服务价格</span><span class="v">RM 680.00</span></div>
+        <div class="brow"><span class="k">已收订金</span><span class="v">RM 50.00</span></div>
+        <div class="brow"><span class="k">当天收余款</span><span class="v">RM 630.00</span></div>
+        <div class="brow" style="padding-top:14px;border-top:1px dashed #2a2a2a;margin-top:4px"><span class="k">预约总金额</span><span class="v">RM 680.00</span></div>
+        <div class="brow"><span class="k">平台服务费（7%）</span><span class="v deduct">−RM 47.60</span></div>
+        <div class="brow total"><span class="k">你的实收</span><span class="v earn">RM 632.40</span></div>
+      </div>
+      <div class="breakdowncard">
+        <div class="brow"><span class="k">打款批次</span><span class="v">6月2日（周一）</span></div>
+        <div class="brow"><span class="k">收款账户</span><span class="v">马来亚银行 ****4821</span></div>
+        <div class="brow"><span class="k">处理机构</span><span class="v">Billplz</span></div>
+      </div>
+      <div style="font-size:11.5px;color:#4a6a67;text-align:center;font-weight:600;line-height:1.6">平台服务费涵盖支付处理、<br>反欺诈保护及应用运营成本。</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 银行与打款设置 -->
+<div class="col">
+  <div class="col-label"><span class="num">设置</span><span class="ttl">银行与打款</span><span class="sub">来自步骤 6a</span></div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span class="dots"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg></span></div>
+    <div class="langbar"><div class="lang idle">EN</div><div class="lang active">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+    <div class="backrow"><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><span class="ptitle">银行与打款设置</span></div>
+    <div class="settingbody">
+      <div class="bankbig">
+        <div class="bl">已绑定银行账户</div>
+        <div class="bname">马来亚银行</div>
+        <div class="bacct">**** **** **** 4821</div>
+        <div class="bholder">黄美玲</div>
+        <div class="bverified"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>已验证 · Billplz</div>
+      </div>
+      <div class="settingscard">
+        <div class="settingrow"><div><div class="rl">打款周期</div><div class="rs">每周一自动打款——无需任何操作</div></div><div class="rv">每周一</div></div>
+        <div class="settingrow"><div><div class="rl">自动打款</div><div class="rs">关闭可暂停打款</div></div><div class="toggle on"><i></i></div></div>
+        <div class="settingrow"><div><div class="rl">最低打款金额</div><div class="rs">低于此金额将顺延至下周一</div></div><div class="rv">RM 10</div></div>
+        <div class="settingrow"><div><div class="rl">下次打款</div><div class="rs">根据当前余额预估</div></div><div class="rv" style="color:var(--tiffany)">6月2日（周一）<br>RM 1,247</div></div>
+      </div>
+      <button class="changebtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>更换银行账户</button>
+      <div style="font-size:11px;color:#3a5a57;text-align:center;margin-top:14px;line-height:1.7;font-weight:600">银行信息已加密 · 通过 Billplz 与 Stripe Connect 处理<br>账户变更将于下一个周一打款时生效</div>
+    </div>
+    <div class="bottomnav">
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">首页</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">预约</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg><span class="navlabel">广播</span></div>
+      <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span class="navlabel">钱包</span></div>
+      <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">个人</span></div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+</body>
+</html>
