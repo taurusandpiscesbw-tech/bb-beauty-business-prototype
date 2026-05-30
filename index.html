@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BB Beauty Business — Phase 1 Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope',sans-serif;background:#070a0a;color:#fff;min-height:100vh;padding:48px 24px 80px;-webkit-font-smoothing:antialiased}
+  body{background-image:radial-gradient(900px 500px at 20% 0%,rgba(10,191,184,.12),transparent 60%)}
+  .wrap{max-width:900px;margin:0 auto}
+  .logo{display:flex;align-items:center;gap:12px;margin-bottom:48px}
+  .mark{width:44px;height:44px;border-radius:13px;background:#003B36;display:grid;place-items:center;position:relative}
+  .mark b{font-family:'Playfair Display',serif;font-size:26px;color:#81D8D0}
+  .mark .dot{position:absolute;left:9px;bottom:8px;width:5px;height:5px;border-radius:50%;background:#81D8D0}
+  .logo .name{font-family:'Playfair Display',serif;font-weight:800;font-size:20px}
+  .logo .tag{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#0ABFB8;margin-top:3px}
+  h1{font-family:'Playfair Display',serif;font-weight:800;font-size:36px;line-height:1.1;margin-bottom:10px}
+  .sub{color:#9fb0ae;font-size:15px;line-height:1.6;margin-bottom:48px;max-width:580px}
+  .section{margin-bottom:40px}
+  .section-label{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#0ABFB8;margin-bottom:16px}
+  .cards{display:flex;flex-direction:column;gap:12px}
+  .card{background:#111;border:1px solid #1e1e1e;border-radius:18px;padding:20px 22px;display:flex;align-items:center;gap:18px;text-decoration:none;transition:border-color .15s,background .15s}
+  .card:hover{background:#161616;border-color:#2a3a38}
+  .card .icon{font-size:28px;flex:none;width:52px;height:52px;background:#0d0d0d;border-radius:14px;display:grid;place-items:center}
+  .card .info{flex:1}
+  .card .title{font-weight:800;font-size:15px;margin-bottom:4px}
+  .card .desc{font-size:12.5px;color:#7a8a88;font-weight:500;line-height:1.4}
+  .card .langs{display:flex;gap:6px;margin-top:8px}
+  .lang-pill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:#1a2a28;color:#0ABFB8;border:1px solid rgba(10,191,184,.2)}
+  .lang-pill.zh{color:#E8A89A;background:rgba(232,168,154,.1);border-color:rgba(232,168,154,.2)}
+  .arrow{color:#3a5a57;font-size:20px;flex:none}
+  .card:hover .arrow{color:#0ABFB8}
+  .status{display:inline-flex;align-items:center;gap:6px;background:#0d1a18;border:1px solid rgba(10,191,184,.2);border-radius:12px;padding:10px 16px;font-size:12.5px;font-weight:700;color:#9fb0ae;margin-top:40px}
+  .status .dot-live{width:8px;height:8px;border-radius:50%;background:#0ABFB8;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  @media(max-width:600px){h1{font-size:28px}.card{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">
+    <div class="mark"><b>B</b><span class="dot"></span></div>
+    <div><div class="name">Beauty Business</div><div class="tag">ACPF Certified</div></div>
+  </div>
+
+  <h1>Phase 1 Prototype</h1>
+  <p class="sub">Interactive UI screens for the BB Beauty Business app — tap any screen below to preview it. Designed for ACPF-certified beauty professionals in Malaysia.</p>
+
+  <div class="section">
+    <div class="section-label">Registration &amp; Onboarding</div>
+    <div class="cards">
+      <a class="card" href="bb-screens.html">
+        <div class="icon">🪪</div>
+        <div class="info">
+          <div class="title">Steps 4–6 + Merchant Public Profile</div>
+          <div class="desc">Availability calendar, portfolio upload, bank account, new client offer, and the client-facing merchant profile</div>
+          <div class="langs"><span class="lang-pill">EN</span></div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Booking Flow</div>
+    <div class="cards">
+      <a class="card" href="bb-booking.html">
+        <div class="icon">📅</div>
+        <div class="info">
+          <div class="title">Smart Booking — Steps 3 &amp; 4 + 3-Step Client Flow</div>
+          <div class="desc">Per-service buffers, booking rules, compact-day toggle, recommended time slots, deposit &amp; FPX payment</div>
+          <div class="langs"><span class="lang-pill">EN</span></div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+      <a class="card" href="bb-booking-zh.html">
+        <div class="icon">📅</div>
+        <div class="info">
+          <div class="title">智能预约流程（中文版）</div>
+          <div class="desc">服务缓冲设置、预约规则、紧凑档期、推荐时段、订金与 FPX 付款</div>
+          <div class="langs"><span class="lang-pill zh">中文</span></div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Broadcast Feed — WhatsApp Replacement</div>
+    <div class="cards">
+      <a class="card" href="bb-broadcast.html">
+        <div class="icon">📡</div>
+        <div class="info">
+          <div class="title">Broadcast Feed</div>
+          <div class="desc">Merchant hub, compose post, client following feed, Open Slot expanded — ⚡ Open Slot · ✨ Spotlight · 📣 Broadcast</div>
+          <div class="langs"><span class="lang-pill">EN</span></div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+      <a class="card" href="bb-broadcast-zh.html">
+        <div class="icon">📡</div>
+        <div class="info">
+          <div class="title">广播动态（中文版）</div>
+          <div class="desc">广播中心、发布帖子、顾客关注动态、空档预约展开页</div>
+          <div class="langs"><span class="lang-pill zh">中文</span></div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+      <a class="card" href="bb-broadcast-photos.html">
+        <div class="icon">📸</div>
+        <div class="info">
+          <div class="title">Broadcast — with Photo Upload</div>
+          <div class="desc">Multi-photo carousel, before/after gallery, hero result shots on Open Slot cards — the GrabFood effect for beauty</div>
+          <div class="langs"><span class="lang-pill">EN</span></div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+      <a class="card" href="bb-broadcast-photos-zh.html">
+        <div class="icon">📸</div>
+        <div class="info">
+          <div class="title">广播动态含图片（中文版）</div>
+          <div class="desc">多图轮播、修复前后对比图、空档预约成果大图展示</div>
+          <div class="langs"><span class="lang-pill zh">中文</span></div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="status"><span class="dot-live"></span>Phase 1 in progress · Earnings Wallet, Client Home &amp; Booking Management coming next</div>
+</div>
+</body>
+</html>
