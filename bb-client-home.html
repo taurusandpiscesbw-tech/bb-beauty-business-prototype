@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BB Beauty Business — Client Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tiffany:#0ABFB8;--robin:#81D8D0;--pale:#E0F7F5;--navy:#003B36;--darknavy:#002B26;
+    --rose:#E8A89A;--black:#0a0a0a;--card:#1a1a1a;--gt:#AAAAAA;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Manrope',sans-serif;background:#070a0a;
+    background-image:radial-gradient(1100px 500px at 20% 0%,rgba(10,191,184,.09),transparent 55%),
+                     radial-gradient(700px 400px at 95% 100%,rgba(232,168,154,.07),transparent 55%);
+    color:#fff;padding:48px 24px 80px;-webkit-font-smoothing:antialiased;
+  }
+  .board-head{max-width:1500px;margin:0 auto 40px}
+  .kicker{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--tiffany);font-weight:700}
+  .board-head h1{font-family:'Playfair Display',serif;font-weight:800;font-size:34px;margin-top:8px;letter-spacing:-.01em}
+  .board-head p{color:#9fb0ae;margin-top:8px;font-size:14px;max-width:760px;line-height:1.6}
+  .board{max-width:1500px;margin:0 auto;display:flex;gap:34px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .col{width:340px}
+  .col-label{margin:0 4px 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .col-label .num{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--tiffany)}
+  .col-label .ttl{font-size:14px;font-weight:700}
+  .col-label .sub{font-size:11.5px;color:#8a9b99;font-weight:500}
+
+  .phone{width:340px;border-radius:42px;padding:11px;background:linear-gradient(160deg,#2a2c2c,#0c0d0d);box-shadow:0 40px 80px -24px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04) inset}
+  .screen{border-radius:32px;overflow:hidden;display:flex;flex-direction:column;min-height:700px;background:var(--pale);color:var(--navy)}
+
+  /* status + lang */
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 22px 6px;font-size:13px;font-weight:700;color:var(--navy)}
+  .statusbar .dots{display:flex;gap:5px;align-items:center}
+  .langbar{display:flex;gap:7px;padding:6px 18px 0}
+  .lang{flex:1;text-align:center;font-size:12px;font-weight:700;padding:7px 0;border-radius:999px}
+  .lang.active{background:var(--navy);color:#fff}
+  .lang.idle{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}
+
+  /* robin header */
+  .robin-head{background:var(--robin);padding-bottom:18px}
+  .toprow{display:flex;align-items:center;justify-content:space-between;padding:12px 20px 14px}
+  .logo-inline{display:flex;align-items:center;gap:9px}
+  .mark{width:34px;height:34px;border-radius:10px;background:var(--navy);display:grid;place-items:center;position:relative;flex:none}
+  .mark b{font-family:'Playfair Display',serif;font-size:20px;color:var(--robin);line-height:1}
+  .mark .dot{position:absolute;left:7px;bottom:6px;width:4px;height:4px;border-radius:50%;background:var(--robin)}
+  .loc{display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:var(--navy)}
+  .iconbtn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.5);display:grid;place-items:center;flex:none;position:relative}
+  .notif-dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:#E8A89A;border:2px solid var(--robin)}
+  .searchbar{margin:0 20px;background:#fff;border-radius:14px;padding:13px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px -16px rgba(0,59,54,.4)}
+  .searchbar svg{color:#7da59f;flex:none}
+  .searchbar .ph{font-size:13.5px;font-weight:600;color:#9fc4be;flex:1}
+  .searchbar .filt{font-size:11px;font-weight:800;color:var(--tiffany);background:rgba(10,191,184,.12);padding:5px 10px;border-radius:8px}
+
+  /* content scroll area */
+  .scroll{flex:1;overflow:hidden;padding-bottom:4px}
+  .padded{padding:16px 20px 0}
+
+  /* BB Stars chip */
+  .stars-chip{display:inline-flex;align-items:center;gap:7px;background:rgba(232,168,154,.18);border:1px solid rgba(232,168,154,.3);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:800;color:#b76a58;margin-bottom:14px}
+
+  /* upcoming appt banner */
+  .appt-banner{background:#fff;border:1.5px solid rgba(10,191,184,.35);border-radius:16px;padding:14px;margin-bottom:16px;box-shadow:0 8px 20px -16px rgba(0,59,54,.4)}
+  .appt-banner .ab-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+  .appt-banner .ab-tag{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:rgba(10,191,184,.14);color:var(--tiffany);padding:4px 9px;border-radius:999px}
+  .appt-banner .ab-time{font-size:11px;font-weight:700;color:#3d6b65;margin-left:auto}
+  .appt-banner .ab-svc{font-weight:800;font-size:14px;color:var(--navy);margin-bottom:3px}
+  .appt-banner .ab-who{font-size:12px;font-weight:600;color:#3d6b65}
+  .appt-banner .ab-btns{display:flex;gap:8px;margin-top:11px}
+  .ab-btn{flex:1;border:1.5px solid rgba(0,59,54,.15);background:transparent;color:var(--navy);font-family:inherit;font-weight:700;font-size:12px;padding:9px;border-radius:11px;text-align:center;cursor:pointer}
+  .ab-btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+  /* category chips */
+  .catrow{display:flex;gap:8px;overflow:hidden;margin-bottom:18px;padding:2px 0}
+  .catchip{flex:none;font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:999px;white-space:nowrap;cursor:pointer}
+  .catchip.sel{background:var(--navy);color:#fff}
+  .catchip.idle{background:#fff;color:var(--navy);border:1px solid rgba(0,59,54,.14)}
+
+  /* section headers */
+  .secrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .secrow .sl{font-weight:800;font-size:14px;color:var(--navy)}
+  .secrow .sa{font-size:12px;font-weight:700;color:var(--tiffany)}
+
+  /* merchant cards horizontal */
+  .mscroll{display:flex;gap:12px;overflow:hidden;padding:2px 0 4px;margin-bottom:20px}
+  .mcard{flex:none;width:170px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 10px 24px -18px rgba(0,59,54,.5)}
+  .mcard .mimg{height:110px;position:relative}
+  .mcard .mimg .favbtn{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.8);display:grid;place-items:center}
+  .mcard .minfo{padding:11px 12px}
+  .mcard .mn{font-weight:800;font-size:13px;color:var(--navy);margin-bottom:1px}
+  .mcard .ms{font-size:11px;color:#3d6b65;font-weight:600;margin-bottom:6px}
+  .mcard .mbot{display:flex;align-items:center;justify-content:space-between}
+  .mcard .mrat{font-size:11px;font-weight:700;color:#b76a58;display:flex;align-items:center;gap:3px}
+  .mcard .mprice{font-size:11px;font-weight:700;color:#3d6b65}
+  .mcard .mdist{font-size:10px;font-weight:600;color:#9fc4be}
+
+  /* trending grid */
+  .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .ttile{border-radius:14px;overflow:hidden;position:relative;height:100px}
+  .ttile .tf{position:absolute;inset:0}
+  .ttile .toverlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.5),transparent 50%)}
+  .ttile .tinfo{position:absolute;bottom:8px;left:9px;right:9px}
+  .ttile .tname{font-size:11px;font-weight:800;color:#fff;line-height:1.2}
+  .ttile .tartist{font-size:9.5px;color:rgba(255,255,255,.75);font-weight:600;margin-top:2px}
+  .ttile .theart{position:absolute;top:8px;right:8px;display:flex;align-items:center;gap:3px;font-size:10px;font-weight:800;color:#fff}
+
+  /* bottom nav */
+  .bottomnav{display:flex;justify-content:space-around;align-items:center;padding:12px 0 20px;margin-top:auto;background:#fff;border-top:1px solid rgba(0,59,54,.08)}
+  .navitem{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 8px;cursor:pointer;color:#7da59f}
+  .navitem.active{color:var(--navy)}
+  .navlabel{font-size:9.5px;font-weight:700}
+
+  /* explore screen */
+  .search-active{background:#fff;border-radius:14px;margin:0 20px 14px;padding:13px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px -16px rgba(0,59,54,.4);border:1.5px solid var(--navy)}
+  .search-active .q{font-size:13.5px;font-weight:700;color:var(--navy);flex:1}
+  .filterrow{display:flex;gap:8px;padding:0 20px;overflow:hidden;margin-bottom:16px}
+  .fchip{flex:none;font-size:11.5px;font-weight:700;padding:8px 13px;border-radius:999px;white-space:nowrap}
+  .fchip.sel{background:var(--navy);color:#fff}
+  .fchip.idle{background:#fff;color:var(--navy);border:1px solid rgba(0,59,54,.2)}
+  .result{background:#fff;border-radius:18px;padding:14px;margin:0 20px 11px;display:flex;gap:13px;box-shadow:0 8px 20px -16px rgba(0,59,54,.4)}
+  .result .rav{width:60px;height:70px;border-radius:14px;flex:none}
+  .result .rinfo{flex:1}
+  .result .rn{font-weight:800;font-size:14px;color:var(--navy);margin-bottom:2px}
+  .result .rs{font-size:11.5px;color:#3d6b65;font-weight:600;margin-bottom:5px}
+  .result .rmeta{display:flex;gap:10px;align-items:center}
+  .result .rrat{font-size:11px;font-weight:700;color:#b76a58}
+  .result .rdist{font-size:11px;font-weight:600;color:#9fc4be}
+  .result .rprice{font-size:12px;font-weight:800;color:var(--navy);margin-top:4px}
+  .result .ravail{font-size:10.5px;font-weight:700;color:var(--tiffany);margin-top:3px;display:flex;align-items:center;gap:4px}
+  .mapbtn{margin:4px 20px 0;background:var(--navy);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:13.5px;padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;width:calc(100% - 40px)}
+
+  /* bookings screen */
+  .bk-head{background:var(--robin);padding-bottom:14px}
+  .bk-appbar{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 14px}
+  .bk-appbar .t{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--navy)}
+  .bk-tabs{display:flex;gap:4px;padding:0 20px 16px}
+  .bk-tab{flex:1;text-align:center;font-size:13px;font-weight:700;padding:10px;border-radius:12px;color:#3d6b65}
+  .bk-tab.active{background:#fff;color:var(--navy);box-shadow:0 4px 12px -8px rgba(0,59,54,.3)}
+  .appt-card{background:#fff;border-radius:20px;padding:18px;margin:0 20px 12px;box-shadow:0 12px 28px -18px rgba(0,59,54,.5)}
+  .ac-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(10,191,184,.12);border:1px solid rgba(10,191,184,.25);border-radius:999px;font-size:10px;font-weight:800;color:var(--tiffany);padding:4px 10px;margin-bottom:12px}
+  .ac-badge .adot{width:6px;height:6px;border-radius:50%;background:var(--tiffany);animation:blink 1.8s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+  .ac-svc{font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:var(--navy);margin-bottom:4px}
+  .ac-meta{font-size:13px;font-weight:600;color:#3d6b65;margin-bottom:4px;display:flex;align-items:center;gap:7px}
+  .ac-who{font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:14px}
+  .ac-remind{font-size:11px;color:#3d6b65;font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:14px;padding:9px 12px;background:var(--pale);border-radius:11px}
+  .ac-btns{display:flex;gap:8px}
+  .ac-btn{flex:1;border:1.5px solid rgba(0,59,54,.15);background:transparent;color:var(--navy);font-family:inherit;font-weight:700;font-size:12px;padding:10px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+  .ac-btn.danger{color:#c97d6c;border-color:rgba(201,125,108,.25)}
+  .mini-appt{background:#fff;border-radius:16px;padding:14px;margin:0 20px 10px;display:flex;align-items:center;gap:12px;box-shadow:0 6px 16px -14px rgba(0,59,54,.4)}
+  .mini-appt .ma-ico{width:44px;height:44px;border-radius:13px;background:linear-gradient(140deg,#caa,#8c5d52);flex:none}
+  .mini-appt .ma-info{flex:1}
+  .mini-appt .ma-svc{font-weight:800;font-size:13px;color:var(--navy)}
+  .mini-appt .ma-who{font-size:11.5px;color:#3d6b65;font-weight:600;margin-top:2px}
+  .mini-appt .ma-date{font-size:11px;font-weight:700;color:#9fc4be;margin-top:3px}
+  .mini-appt .ma-days{font-size:11px;font-weight:800;color:var(--tiffany)}
+
+  /* profile / me screen */
+  .me-head{background:var(--robin);padding-bottom:20px}
+  .me-topbar{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 16px}
+  .me-topbar .t{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--navy)}
+  .me-avatar{width:72px;height:72px;border-radius:22px;background:linear-gradient(150deg,#bfe3df,#7fc0b9);margin:0 auto 12px;border:3px solid #fff;box-shadow:0 10px 20px -12px rgba(0,59,54,.5)}
+  .me-name{font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:var(--navy);text-align:center}
+  .me-sub{font-size:12px;color:#3d6b65;font-weight:600;text-align:center;margin-top:3px}
+  .me-stars{display:flex;justify-content:center;margin-top:10px}
+  .me-stars .chip{display:inline-flex;align-items:center;gap:6px;background:rgba(232,168,154,.22);border:1px solid rgba(232,168,154,.35);border-radius:999px;padding:6px 14px;font-size:12px;font-weight:800;color:#b76a58}
+  .stat-row{display:flex;gap:1px;margin:16px 20px 16px;background:rgba(0,59,54,.1);border-radius:16px;overflow:hidden}
+  .statcell{flex:1;background:#fff;padding:14px 8px;text-align:center}
+  .statcell:first-child{border-radius:16px 0 0 16px}
+  .statcell:last-child{border-radius:0 16px 16px 0}
+  .statcell .sv{font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:var(--navy)}
+  .statcell .sl{font-size:10px;font-weight:700;color:#3d6b65;margin-top:3px;letter-spacing:.04em}
+  .me-section{background:#fff;border-radius:18px;margin:0 20px 12px;overflow:hidden}
+  .me-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(0,59,54,.06)}
+  .me-row:last-child{border-bottom:none}
+  .me-row .mr-ico{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;flex:none;font-size:17px}
+  .me-row .mr-t{font-weight:700;font-size:13.5px;color:var(--navy);flex:1}
+  .me-row .mr-v{font-size:12px;color:#9fc4be;font-weight:600}
+  .me-row .mr-arr{color:#c5dbd8}
+  .artist-strip{display:flex;gap:10px;padding:0 20px;overflow:hidden;margin-bottom:16px}
+  .art-mini{flex:none;text-align:center}
+  .art-av{width:52px;height:52px;border-radius:16px;margin:0 auto 5px}
+  .art-av.a1{background:linear-gradient(140deg,#caa,#8c5d52)}
+  .art-av.a2{background:linear-gradient(140deg,#81D8D0,#3aa39b)}
+  .art-av.a3{background:linear-gradient(140deg,#b0d8aa,#6ea868)}
+  .art-mini .an{font-size:10.5px;font-weight:700;color:var(--navy)}
+  .scrollnote{font-size:10px;color:#7da59f;text-align:center;padding:4px 0 8px;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <div class="kicker">BB Beauty Business · Client Home</div>
+  <h1>Client Home — Discovery, Bookings &amp; Me</h1>
+  <p>The client-facing side in daylight theme. Home surfaces nearby artists, trending looks from the broadcast feed, and an upcoming appointment reminder. Explore lets clients search and filter by category, rating, price and availability. Bookings shows their full appointment history. Me shows their BB Stars, followed artists, saved looks and settings.</p>
+</div>
+
+<div class="board">
+
+  <!-- ===== CLIENT HOME ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">Home</span><span class="ttl">Client home · discovery</span><span class="sub">daylight</span></div>
+    <div class="phone"><div class="screen">
+      <div class="robin-head">
+        <div class="statusbar"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar"><div class="lang active">EN</div><div class="lang idle">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div class="toprow">
+          <div class="logo-inline">
+            <div class="mark"><b>B</b><span class="dot"></span></div>
+            <div style="font-size:11px;font-weight:700;color:var(--navy)">Beauty Business</div>
+          </div>
+          <div class="loc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Bangsar, KL</div>
+          <div class="iconbtn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+            <div class="notif-dot"></div>
+          </div>
+        </div>
+        <div class="searchbar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <span class="ph">Find your next look...</span>
+          <span class="filt">Filter</span>
+        </div>
+      </div>
+
+      <div class="scroll">
+        <div class="padded">
+          <div style="margin-top:14px"></div>
+          <div class="stars-chip">⭐ 340 BB Stars · Gold Member</div>
+
+          <div class="appt-banner">
+            <div class="ab-top">
+              <span class="ab-tag">⚡ Coming up</span>
+              <span class="ab-time">Tomorrow · 9:00 AM</span>
+            </div>
+            <div class="ab-svc">Classic Lash Set</div>
+            <div class="ab-who">with Lily Wong · JLi Beauty, Bangsar</div>
+            <div class="ab-btns">
+              <div class="ab-btn primary">Get directions</div>
+              <div class="ab-btn">Reschedule</div>
+            </div>
+          </div>
+
+          <div class="catrow">
+            <div class="catchip sel">All</div>
+            <div class="catchip idle">Lashes</div>
+            <div class="catchip idle">Brows</div>
+            <div class="catchip idle">Nails</div>
+            <div class="catchip idle">Hair</div>
+          </div>
+
+          <div class="secrow"><span class="sl">Near you</span><span class="sa">See all</span></div>
+        </div>
+
+        <div class="mscroll" style="padding:0 20px">
+          <div class="mcard">
+            <div class="mimg" style="background:linear-gradient(140deg,#caa,#8c5d52)">
+              <div class="favbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.8z"/></svg></div>
+            </div>
+            <div class="minfo">
+              <div class="mn">Lily Wong</div>
+              <div class="ms">Brow &amp; Lash · JLi Beauty</div>
+              <div class="mbot"><span class="mrat">★ 4.9</span><span class="mdist">0.8 km</span></div>
+              <div class="mprice" style="margin-top:5px">From RM 140</div>
+            </div>
+          </div>
+          <div class="mcard">
+            <div class="mimg" style="background:linear-gradient(140deg,#81D8D0,#3aa39b)">
+              <div class="favbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.8z" fill="#E8A89A"/></svg></div>
+            </div>
+            <div class="minfo">
+              <div class="mn">Aisha Razak</div>
+              <div class="ms">Brow Artist · Aisha's Artistry</div>
+              <div class="mbot"><span class="mrat">★ 4.8</span><span class="mdist">1.2 km</span></div>
+              <div class="mprice" style="margin-top:5px">From RM 120</div>
+            </div>
+          </div>
+          <div class="mcard">
+            <div class="mimg" style="background:linear-gradient(140deg,#b0d8aa,#6ea868)">
+              <div class="favbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.8z"/></svg></div>
+            </div>
+            <div class="minfo">
+              <div class="mn">Rachel Lim</div>
+              <div class="ms">Nail Art · Nail Lab KL</div>
+              <div class="mbot"><span class="mrat">★ 4.7</span><span class="mdist">1.8 km</span></div>
+              <div class="mprice" style="margin-top:5px">From RM 80</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="padded">
+          <div class="secrow"><span class="sl">Trending looks 🔥</span><span class="sa">See all</span></div>
+          <div class="tgrid">
+            <div class="ttile"><div class="tf" style="background:linear-gradient(140deg,#0a4a44,#0ABFB8)"></div><div class="toverlay"></div><div class="tinfo"><div class="tname">Classic Lash Set</div><div class="tartist">Lily Wong</div></div><div class="theart">❤️ 21</div></div>
+            <div class="ttile"><div class="tf" style="background:linear-gradient(140deg,#7a5a4a,#c49a80)"></div><div class="toverlay"></div><div class="tinfo"><div class="tname">Healed Brow Embroidery</div><div class="tartist">Aisha Razak</div></div><div class="theart">❤️ 94</div></div>
+            <div class="ttile"><div class="tf" style="background:linear-gradient(140deg,#2d6b62,#81D8D0)"></div><div class="toverlay"></div><div class="tinfo"><div class="tname">Lash Lift &amp; Tint</div><div class="tartist">Jenny Tan</div></div><div class="theart">❤️ 47</div></div>
+            <div class="ttile"><div class="tf" style="background:linear-gradient(140deg,#a06080,#e8a8b8)"></div><div class="toverlay"></div><div class="tinfo"><div class="tname">Gel Nail Extension</div><div class="tartist">Rachel Lim</div></div><div class="theart">❤️ 63</div></div>
+          </div>
+          <div class="scrollnote">Scroll to discover more artists near you</div>
+        </div>
+      </div>
+
+      <div class="bottomnav">
+        <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">Home</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg><span class="navlabel">Following</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span class="navlabel">Explore</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">Bookings</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">Me</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== EXPLORE / SEARCH ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">Explore</span><span class="ttl">Search &amp; filter</span><span class="sub">lash results</span></div>
+    <div class="phone"><div class="screen">
+      <div class="robin-head">
+        <div class="statusbar"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar"><div class="lang active">EN</div><div class="lang idle">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div style="padding:8px 20px 0;display:flex;align-items:center;gap:10px">
+          <div class="iconbtn" style="background:rgba(255,255,255,.5);border:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+          <div class="search-active" style="flex:1;margin:0">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <span class="q">lash</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9fc4be" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </div>
+        </div>
+        <div style="height:14px"></div>
+      </div>
+
+      <div class="filterrow" style="padding-top:14px">
+        <div class="fchip sel">Bangsar</div>
+        <div class="fchip idle">★ 4.5+</div>
+        <div class="fchip idle">Under RM200</div>
+        <div class="fchip idle">Today</div>
+      </div>
+
+      <div style="padding:0 20px;margin-bottom:10px;font-size:12px;font-weight:700;color:#3d6b65">12 artists found near you</div>
+
+      <div class="result">
+        <div class="rav" style="background:linear-gradient(140deg,#caa,#8c5d52)"></div>
+        <div class="rinfo">
+          <div class="rn">Lily Wong</div>
+          <div class="rs">JLi Beauty · Bangsar</div>
+          <div class="rmeta"><span class="rrat">★ 4.9 (218)</span><span class="rdist">0.8 km</span></div>
+          <div class="rprice">Classic Lash · from RM 180</div>
+          <div class="ravail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Available tomorrow</div>
+        </div>
+      </div>
+
+      <div class="result">
+        <div class="rav" style="background:linear-gradient(140deg,#2d6b62,#81D8D0)"></div>
+        <div class="rinfo">
+          <div class="rn">Jenny Tan</div>
+          <div class="rs">Brow &amp; Lash Studio · Damansara</div>
+          <div class="rmeta"><span class="rrat">★ 4.7 (91)</span><span class="rdist">1.5 km</span></div>
+          <div class="rprice">Lash Lift &amp; Tint · from RM 140</div>
+          <div class="ravail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Available today 3 PM</div>
+        </div>
+      </div>
+
+      <div class="result">
+        <div class="rav" style="background:linear-gradient(140deg,#b0d8aa,#6ea868)"></div>
+        <div class="rinfo">
+          <div class="rn">Mei Lin</div>
+          <div class="rs">Luxe Lash · Mont Kiara</div>
+          <div class="rmeta"><span class="rrat">★ 4.6 (54)</span><span class="rdist">2.1 km</span></div>
+          <div class="rprice">Volume Lashes · from RM 160</div>
+          <div class="ravail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Available today 5 PM</div>
+        </div>
+      </div>
+
+      <button class="mapbtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        View on map
+      </button>
+
+      <div class="bottomnav">
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">Home</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg><span class="navlabel">Following</span></div>
+        <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span class="navlabel">Explore</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">Bookings</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">Me</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== MY BOOKINGS ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">Bookings</span><span class="ttl">My appointments</span><span class="sub">upcoming + past</span></div>
+    <div class="phone"><div class="screen">
+      <div class="bk-head">
+        <div class="statusbar"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar"><div class="lang active">EN</div><div class="lang idle">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div class="bk-appbar"><span class="t">My Bookings</span></div>
+        <div class="bk-tabs" style="background:rgba(0,59,54,.06);border-radius:14px;margin:0 20px;padding:5px">
+          <div class="bk-tab active">Upcoming</div>
+          <div class="bk-tab" style="background:transparent;box-shadow:none">Past</div>
+        </div>
+      </div>
+
+      <div class="scroll" style="padding-top:16px">
+        <div class="appt-card">
+          <div class="ac-badge"><span class="adot"></span>In 16 hours</div>
+          <div class="ac-svc">Classic Lash Set</div>
+          <div class="ac-meta">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+            Tue 10 Jun · 9:00 AM · 90 min
+          </div>
+          <div class="ac-who">with Lily Wong · JLi Beauty, Bangsar</div>
+          <div class="ac-remind">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+            Reminders set · 24h and 2h before
+          </div>
+          <div class="ac-btns">
+            <div class="ac-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Directions
+            </div>
+            <div class="ac-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              Reschedule
+            </div>
+            <div class="ac-btn danger">Cancel</div>
+          </div>
+        </div>
+
+        <div style="padding:0 20px;margin-bottom:10px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7da59f">Also coming up</div>
+
+        <div class="mini-appt">
+          <div class="ma-ico"></div>
+          <div class="ma-info">
+            <div class="ma-svc">Brow Embroidery (PMU)</div>
+            <div class="ma-who">Aisha Razak · Aisha's Artistry</div>
+            <div class="ma-date">Mon 23 Jun · 10:00 AM</div>
+          </div>
+          <div class="ma-days">22 days</div>
+        </div>
+
+        <div style="padding:0 20px;margin:16px 0 10px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7da59f">Recent</div>
+
+        <div class="mini-appt">
+          <div class="ma-ico" style="background:linear-gradient(140deg,#81D8D0,#3aa39b)"></div>
+          <div class="ma-info">
+            <div class="ma-svc">Lash Lift &amp; Tint</div>
+            <div class="ma-who">Lily Wong · JLi Beauty</div>
+            <div class="ma-date">Wed 15 May · completed ✓</div>
+          </div>
+          <div style="font-size:11px;font-weight:800;color:var(--rose)">★ Rate</div>
+        </div>
+
+        <div class="scrollnote">Tap any booking to view full details</div>
+      </div>
+
+      <div class="bottomnav">
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">Home</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg><span class="navlabel">Following</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span class="navlabel">Explore</span></div>
+        <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">Bookings</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">Me</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ===== ME / PROFILE ===== -->
+  <div class="col">
+    <div class="col-label"><span class="num">Me</span><span class="ttl">Client profile</span><span class="sub">stars · following · saves</span></div>
+    <div class="phone"><div class="screen">
+      <div class="me-head">
+        <div class="statusbar"><span>9:41</span><span class="dots">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor"/><rect x="21" y="4" width="2" height="4" rx="1" fill="currentColor"/></svg>
+        </span></div>
+        <div class="langbar"><div class="lang active">EN</div><div class="lang idle">中文</div><div class="lang idle">BM</div><div class="lang idle">VI</div></div>
+        <div class="me-topbar"><span class="t">Me</span><div class="iconbtn" style="background:rgba(255,255,255,.5);border:none"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#003B36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div></div>
+        <div class="me-avatar"></div>
+        <div class="me-name">Sarah Tan</div>
+        <div class="me-sub">BB Member since Jan 2025</div>
+        <div class="me-stars"><div class="chip">⭐ 340 BB Stars · Gold Member</div></div>
+      </div>
+
+      <div class="stat-row">
+        <div class="statcell"><div class="sv">12</div><div class="sl">Bookings</div></div>
+        <div class="statcell"><div class="sv">5</div><div class="sl">Following</div></div>
+        <div class="statcell"><div class="sv">8</div><div class="sl">Saved</div></div>
+      </div>
+
+      <div style="padding:0 20px;margin-bottom:10px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7da59f">Artists I follow</div>
+      <div class="artist-strip">
+        <div class="art-mini"><div class="art-av a1"></div><div class="an">Lily</div></div>
+        <div class="art-mini"><div class="art-av a2"></div><div class="an">Aisha</div></div>
+        <div class="art-mini"><div class="art-av a3"></div><div class="an">Rachel</div></div>
+        <div class="art-mini" style="display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="width:52px;height:52px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--tiffany);border:1.5px dashed rgba(10,191,184,.4)">+ Find</div></div>
+      </div>
+
+      <div class="me-section">
+        <div class="me-row"><div class="mr-ico" style="background:rgba(232,168,154,.18)">🔔</div><div class="mr-t">Notifications</div><div class="mr-arr">›</div></div>
+        <div class="me-row"><div class="mr-ico" style="background:rgba(10,191,184,.12)">💳</div><div class="mr-t">Payment methods</div><div class="mr-v">DuitNow · TNG</div><div class="mr-arr">›</div></div>
+        <div class="me-row"><div class="mr-ico" style="background:rgba(129,216,208,.18)">🌐</div><div class="mr-t">Language</div><div class="mr-v">English</div><div class="mr-arr">›</div></div>
+        <div class="me-row"><div class="mr-ico" style="background:#f0f7f0">⭐</div><div class="mr-t">BB Stars &amp; rewards</div><div class="mr-v" style="color:var(--rose);font-weight:800">340 pts</div><div class="mr-arr">›</div></div>
+        <div class="me-row"><div class="mr-ico" style="background:rgba(201,125,108,.12)">🚪</div><div class="mr-t" style="color:#c97d6c">Sign out</div></div>
+      </div>
+
+      <div class="bottomnav">
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="navlabel">Home</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg><span class="navlabel">Following</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span class="navlabel">Explore</span></div>
+        <div class="navitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="navlabel">Bookings</span></div>
+        <div class="navitem active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="navlabel">Me</span></div>
+      </div>
+    </div></div>
+  </div>
+
+</div>
+</body>
+</html>
